@@ -1,0 +1,93 @@
+Deben desarrollar una aplicacion Full Stack con:
+-React
+-Javascript/typescript
+-Express
+-MongoDB
+-Mongoose
+
+Modalidad:
+-Preferentemente grupos de 2 personas (Pueden hacerlo solos)
+-Si o si, usando github
+-Desarrollo dividido en backend y frontend, en 2 repositorios
+
+Proyecto:
+Ecommerce, puede ser de estas tematicas (O las que se les ocurran, mientras sea legal):
+-Tecnologia
+-Ropa
+-Videojuegos
+-Libros, etc...
+
+
+--------------------------
+
+FRONTEND:
+
+React + Vite + JS/TS 
+
+-Componentes reutilizables:
+Navbar, ProductCar, Footer, Cart, Form, Sidebar, etc.
+
+-React Router DOM con minimo:
+/
+productos
+producto/:id
+carrito
+login
+admin
+
+-Loading y manejo de errores.
+
+-uso de Redux
+
+agregar productos
+eliminar productos
+vaciar carrito
+mostrar total
+
+-Responsive -> COn la tecnologia de estilos que ustedes quieran, CSS, Boostrap, Tailwind, scss
+
+
+--------------------------
+
+BACKEND:
+
+-Servidor en Express
+
+-Rutas separadas:
+
+-CRUD completo de producto y de usuario
+
+-Manejo de errores
+
+MONGO DB + MONGOOSE:
+Schema Mongoose
+
+Producto debe tener:
+
+nombre
+precio
+descripcion
+stock
+categoria
+
+Validaciones <- si o si.
+
+---------------------------------
+
+TIEMPO LIMITE 15 AGOSTO
+
+FUNCIONALIDADES MINIMAS:
+Página principal
+
+Mostrar productos dinámicamente.
+
+Buscador
+
+Pagina Detalle Producto
+
+carrito
+
+login
+
+Panel administrativo
+

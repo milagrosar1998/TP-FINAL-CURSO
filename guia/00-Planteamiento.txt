@@ -1,0 +1,75 @@
+Proyecto final
+
+Guia de pasos (o algo similar)
+
+1. Que vamos a construir/desarrollar?
+
+Aca, vamos a definir todo lo que tenga que ver con la tematica del proyecto.
+
+Podemos o bien intentar hacer algo de nuestra propia autoria, por ejemplo:
+
+    -Un emprendimiento propio
+    -Una idea que tengan
+    -Algo copiado (NO ACEPTO CLONES)
+
+
+Ahora que deberiamos tener:
+    Una idea de negocio.
+
+-------------------------------------------------------------------------------
+
+
+2. Pensar que define a esa idea de negocio.
+
+Ejemplo:
+    Ropa para perros.
+
+¿Que cosas hace que mi pagina sea un ecommerce de ropa para perros?
+¿Que lo define? ¿Que necesita para serlo?
+
+Vamos del mas high level al mas low level (Nivel alto a bajo)
+
+    -Que necesito para tener un ecommerce? -> Una pagina.
+    -Que requiere una pagina? -> Interfaces, tecnologia.
+        -Que tecnologia?    
+                        Estructura -> Vite 
+                        Estilos -> CSS/SCSS/BOOTSTRAP/TAILWIND/ETC.
+                        Funcionalidad -> JS/TS
+    -Interfaces -> Que cosas voy a mostrar? -> Esto nos lleva al proximo punto
+    -API -> ¿Que informacion voy a llevar? ¿La debo procesar? ¿Debo validar?
+    -Base de datos -> ¿Que voy a guardar? ¿Que necesito guardar?
+
+3. Definir que funcionalidades vamos a necesitar:
+
+    -Catalogo -> Quien puede comprar?
+        -Articulos
+            -Categoria
+            -precio
+            -stock
+            -nombre
+            -descripcion
+            -Imagen
+        -Carrito
+            -Acumulen producto, y calcule el subtotal
+            -Si tenemos que guardar informacion del carrito:
+                -Para pasarla por ejemplo, del catalogo al carrito -> REDUX 
+                -Para guardarla, por si se recarga la pagina o lo que sea -> localStorage 
+
+    -Login/Registro
+        -Que datos le voy a pedir al usuario? -> Valido esto?
+            -nombre -> Puedo poner de nombre !0312" ?
+            -Email
+            -Ciudad/pais
+            -edad
+            -Direccion
+            -Password
+        -Perfil de usuario
+    
+    -Roles de usuario -> Comprador / Vendedor / Administrador
+        -Ya tenemos seccion de comprador (Perfil de usuario)
+        -Vamos a necesitar un panel de Vendedor, con un CRUD de productos.
+            -Pueda subir, editar, o borrar SOLO sus productos.
+        -El admin tiene acceso a un CRUD de usuarios
+
+    -Buscador de productos.
+    

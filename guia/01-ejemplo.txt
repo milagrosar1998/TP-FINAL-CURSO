@@ -1,0 +1,6 @@
+Secciones:
+    -Home
+    -Login/Register
+    -Catalogo
+    -CRUD Productos/usuarios
+
