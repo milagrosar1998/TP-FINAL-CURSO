@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 
 
-export default function Navbar() {
+export default function Navbar({ cantidadCarrito }) {
 
   return (
     <nav className="navbar">
@@ -22,6 +22,12 @@ export default function Navbar() {
         <li><Link to="/contacto">Contacto</Link></li>
         <li><Link to="/login">Ingresar</Link></li>
         <li><Link to="/registro">Registrarse</Link></li>
+        <li><Link to="/carrito">
+          Carrito ({cantidadCarrito})
+        </Link></li>
+
+
+
       </ul>
 
 

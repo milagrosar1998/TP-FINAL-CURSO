@@ -11,6 +11,18 @@ export default function ProductCard({
   precio,
   agregarAlCarrito,
 }) {
+
+
+
+  const producto = {
+    id,
+    nombre,
+    descripcion,
+    imagen,
+    precio,
+  };
+
+
   return (
 
     <article className="producto-card">
@@ -35,13 +47,9 @@ export default function ProductCard({
 
 
 
-      <button onClick={() => agregarAlCarrito({
-        id,
-        nombre,
-        descripcion,
-        imagen,
-        precio,
-      })}>
+      <button onClick={() => agregarAlCarrito(producto)
+      }>
+        
         Agregar al carrito
       </button>
 
@@ -50,6 +58,6 @@ export default function ProductCard({
       </Link>
 
 
-    </article>
+    </article >
   );
 }

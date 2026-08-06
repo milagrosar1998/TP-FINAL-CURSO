@@ -2,24 +2,30 @@ import { Heading } from "../atoms";
 import { InputLabel } from "../molecules";
 
 export default function Form({
-  formTitle = "Form",
+  formTitle = "Formulario",
   inputs = [],
   className = "",
-  formSubmit = () => {},
+  formSubmit = () => { },
 }) {
   return (
-    <form className={className}>
-      <Heading size="h1" text={formTitle} onSubmit={formSubmit} />
-      {inputs.length
-        ? inputs.map((input) => (
-            <InputLabel
-              className={input.className}
-              label={input.label}
-              inputId={input.inputId}
-              {...input}
-            />
-          ))
-        : null}
+    <form className={className} onSubmit={formSubmit}>
+      <Heading size="h1" text={formTitle} />
+
+
+
+      {inputs.length ? (inputs.map((input) => (
+        <InputLabel
+          key={input.inputId}
+          className={input.className}
+          label={input.label}
+          inputId={input.inputId}
+          {...input}
+        />
+      ))
+      ) : (
+           <p>No hay campos disponibles.</p>
+      )}
+      
       <button type="submit">{formTitle}</button>
     </form>
   );

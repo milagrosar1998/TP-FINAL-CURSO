@@ -5,6 +5,7 @@ export const loginFields = [
         type: "email",
         placeholder: "Ingresá tu email",
         name: "email",
+        required: true,
     },
     {
         label: "Contraseña",
@@ -12,5 +13,6 @@ export const loginFields = [
         type: "password",
         placeholder: "Ingresá tu contraseña",
         name: "password",
+        required: true,
     },
 ];

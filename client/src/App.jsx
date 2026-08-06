@@ -2,7 +2,6 @@ import "./App.css";
 
 import { Routes, Route } from "react-router-dom";
 
-
 import { useState } from "react";
 
 
@@ -19,7 +18,11 @@ import {
   Contacto,
   Login,
   Registro,
-  ProductoDetalle
+  ProductoDetalle,
+  Carrito,
+  Admin,
+  Vendor,
+  Usuario,
 
 } from "./components/page";
 
@@ -32,11 +35,25 @@ function App() {
   function agregarAlCarrito(producto) {
     setCarrito([...carrito, producto]);
   }
+  function eliminarDelCarrito(indiceProducto) {
+    const nuevoCarrito = carrito.filter(
+      (producto, indice) => indice !== indiceProducto
+    );
+
+    setCarrito(nuevoCarrito);
+  }
+
+  function vaciarCarrito() {
+    setCarrito([]);
+  }
 
 
   return (
     <>
-      <Navbar />
+      <Navbar cantidadCarrito={carrito.length} />
+
+
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
@@ -53,6 +70,26 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/producto/:id" element={<ProductoDetalle />} />
+        <Route path="/carrito" element={
+          <Carrito
+            carrito={carrito}
+            eliminarDelCarrito={eliminarDelCarrito}
+            vaciarCarrito={vaciarCarrito}
+          />} />
+
+        <Route path="/producto/:id" element={
+          <ProductoDetalle
+            agregarAlCarrito={agregarAlCarrito}
+          />
+        }
+        />
+
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/vendor" element={<Vendor />} />
+        <Route path="/usuario" element={<Usuario />} />
+
+
+
       </Routes>
 
       <Footer />

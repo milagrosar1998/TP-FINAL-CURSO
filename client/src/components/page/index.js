@@ -7,10 +7,11 @@ import Contacto from "./Contacto";
 import Login from "./Login";
 import Registro from "./Registro";
 import ProductoDetalle from "./ProductoDetalle";
+import Carrito from "./Carrito";
+import Admin from "./Admin";
 
-
-
-
+import Vendor from "./Vendor";
+import Usuario from "./Usuario";
 
 
 
@@ -25,5 +26,11 @@ export {
     Contacto,
     Login,
     Registro,
-    ProductoDetalle
+    ProductoDetalle,
+    Carrito,
+    Admin,
+    Vendor,
+Usuario,
+
+
 }

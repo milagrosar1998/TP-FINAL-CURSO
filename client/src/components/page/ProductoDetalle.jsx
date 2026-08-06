@@ -1,3 +1,5 @@
+
+
 export default function ProductoDetalle() {
     return (
         <section>
