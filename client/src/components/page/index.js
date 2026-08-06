@@ -6,7 +6,7 @@ import Nosotros from "./Nosotros";
 import Contacto from "./Contacto";
 import Login from "./Login";
 import Registro from "./Registro";
-
+import ProductoDetalle from "./ProductoDetalle";
 
 
 
@@ -25,4 +25,5 @@ export {
     Contacto,
     Login,
     Registro,
+    ProductoDetalle
 }
