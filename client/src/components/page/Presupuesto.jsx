@@ -1,0 +1,126 @@
+import { useState } from "react";
+
+export default function Presupuesto() {
+
+  const [presupuesto, setPresupuesto] = useState({
+    servicio: "",
+    direccion: "",
+    metrosCuadrados: "",
+    descripcion: "",
+  });//guarda lo q usuario escribe
+
+  function manejarCambio(evento) {
+    const { name, value } = evento.target;
+
+    setPresupuesto({
+      ...presupuesto,
+      [name]: value,
+    });
+  }
+
+  function enviarPresupuesto(evento) {
+    evento.preventDefault();//evita recargar la pag
+
+    alert("Solicitud de presupuesto enviada");
+
+    setPresupuesto({
+      servicio: "",
+      direccion: "",
+      metrosCuadrados: "",
+      descripcion: "",
+    });
+  }
+
+  return (
+    <section>
+      <h1>Solicitar presupuesto</h1>
+
+      <p>
+        Contanos sobre tu proyecto y nos comunicaremos con vos
+        para brindarte una propuesta personalizada.
+      </p>
+
+      <form onSubmit={enviarPresupuesto}>
+        <div>
+          <label htmlFor="servicio">Servicio</label>
+
+          <select
+            id="servicio"
+            name="servicio"
+            value={presupuesto.servicio}
+            onChange={manejarCambio}
+            required
+          >
+            <option value="">Seleccioná un servicio</option>
+            <option value="Construcción en seco">
+              Construcción en seco
+            </option>
+            <option value="Remodelación">
+              Remodelación
+            </option>
+            <option value="Electricidad">
+              Electricidad
+            </option>
+            <option value="Pintura">
+              Pintura
+            </option>
+            <option value="Reparación">
+              Reparación
+            </option>
+            <option value="Otro">
+              Otro
+            </option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="direccion">
+            Dirección de la obra
+          </label>
+
+          <input
+            id="direccion"
+            name="direccion"
+            type="text"
+            value={presupuesto.direccion}
+            onChange={manejarCambio}
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="metrosCuadrados">
+            Metros cuadrados
+          </label>
+
+          <input
+            id="metrosCuadrados"
+            name="metrosCuadrados"
+            type="number"
+            min="0"
+            value={presupuesto.metrosCuadrados}
+            onChange={manejarCambio}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="descripcion">
+            Descripción del trabajo
+          </label>
+
+          <textarea
+            id="descripcion"
+            name="descripcion"
+            value={presupuesto.descripcion}
+            onChange={manejarCambio}
+            required
+          />
+        </div>
+
+        <button type="submit">
+          Enviar solicitud
+        </button>
+      </form>
+    </section>
+  );
+}

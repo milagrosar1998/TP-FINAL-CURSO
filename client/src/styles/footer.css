@@ -1,0 +1,21 @@
+footer {
+  background-color: #111;
+  color: white;
+  border-bottom: 6px solid #f2c200;
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+footer h5,
+footer h6,
+footer h3 {
+  color: #f2c200;
+}
+
+footer div {
+  flex: 1;
+  min-width: 220px;
+}

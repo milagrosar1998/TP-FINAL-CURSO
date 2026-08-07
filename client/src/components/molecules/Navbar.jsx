@@ -1,8 +1,16 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+
+export default function Navbar() {
+
+const cantidadCarrito = useSelector(
+  (state) => state.carrito.productos.length
+);
 
 
 
-export default function Navbar({ cantidadCarrito }) {
+
 
   return (
     <nav className="navbar">

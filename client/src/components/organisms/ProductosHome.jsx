@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function ProductosHome() {
   return (
     <section>
@@ -9,7 +11,10 @@ export default function ProductosHome() {
         y rendimiento.
       </p>
 
-      <button>Ver catálogo completo</button>
+      <Link to="/productos">
+        Ver catálogo completo
+      </Link>
+
     </section>
   );
 }

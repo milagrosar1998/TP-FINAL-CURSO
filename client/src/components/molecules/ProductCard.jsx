@@ -1,6 +1,7 @@
 import { Heading, Paragraph } from "../atoms";
 import { Link } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { agregarProducto } from "../../redux/carritoSlice";
 
 
 export default function ProductCard({
@@ -9,10 +10,10 @@ export default function ProductCard({
   descripcion,
   imagen,
   precio,
-  agregarAlCarrito,
+
 }) {
 
-
+const dispatch = useDispatch();
 
   const producto = {
     id,
@@ -20,7 +21,7 @@ export default function ProductCard({
     descripcion,
     imagen,
     precio,
-  };
+  };//producto
 
 
   return (
@@ -47,11 +48,16 @@ export default function ProductCard({
 
 
 
-      <button onClick={() => agregarAlCarrito(producto)
-      }>
-        
+      <button
+        onClick={() => {
+          dispatch(agregarProducto(producto));
+          alert("Producto agregado al carrito");
+        }}
+      >{/*dispatch manda la informacion a redux */}
+
         Agregar al carrito
       </button>
+
 
       <Link to={"/producto/" + id}>
         Ver detalle

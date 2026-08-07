@@ -1,15 +1,22 @@
+import { Link } from "react-router-dom";
+
 export default function ContactoHome() {
   return (
     <section>
 
-      <h2>¿Necesitás un presupuesto?</h2>
+      <h2>¿Tenés un proyecto?</h2>
 
       <p>
         Contanos tu proyecto y nos pondremos en contacto para
-        asesorarte y preparar un presupuesto a medida.
+        asesorarte y ayudarte a encontrar
+        la mejor solución.
       </p>
 
-      <button>Solicitar presupuesto</button>
+      <Link to="/presupuesto">
+        Solicitar presupuesto
+      </Link>
+
+
 
     </section>
   );

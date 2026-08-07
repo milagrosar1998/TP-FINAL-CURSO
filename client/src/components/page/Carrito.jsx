@@ -1,17 +1,19 @@
+import { useSelector, useDispatch } from "react-redux";
 
-
-
-export default function Carrito({
-  carrito,
-  eliminarDelCarrito,
+import {
+  eliminarProducto,
   vaciarCarrito,
+} from "../../redux/carritoSlice";
 
 
-}) 
+export default function Carrito() {
+  const carrito = useSelector(
+    (state) => state.carrito.productos
+  );
+
+  const dispatch = useDispatch();
 
 
-
-{
   let total = 0;
 
 
@@ -44,16 +46,20 @@ export default function Carrito({
               <p>{"$ " + producto.precio}</p>
 
               <button
-                onClick={() => eliminarDelCarrito(indice)}
+                onClick={() => dispatch(eliminarProducto(indice))}
               >
                 Eliminar
               </button>
+
+
             </article>
           ))}
 
           <h2>{"Total: $ " + total}</h2>
 
-          <button onClick={vaciarCarrito}>
+          <button
+            onClick={() => dispatch(vaciarCarrito())}
+          >
             Vaciar carrito
           </button>
 

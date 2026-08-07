@@ -9,7 +9,7 @@ import Registro from "./Registro";
 import ProductoDetalle from "./ProductoDetalle";
 import Carrito from "./Carrito";
 import Admin from "./Admin";
-
+import Presupuesto from "./Presupuesto";
 import Vendor from "./Vendor";
 import Usuario from "./Usuario";
 
@@ -30,7 +30,7 @@ export {
     Carrito,
     Admin,
     Vendor,
-Usuario,
-
+    Usuario,
+    Presupuesto
 
 }

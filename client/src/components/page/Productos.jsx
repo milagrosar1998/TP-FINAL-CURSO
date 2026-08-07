@@ -5,7 +5,7 @@ import { ProductCard } from "../molecules";
 import { useState } from "react";
 
 
-export default function Productos({ agregarAlCarrito }) {
+export default function Productos() {
 
 
 
@@ -51,7 +51,7 @@ export default function Productos({ agregarAlCarrito }) {
           descripcion={producto.descripcion}
           precio={producto.precio}
           imagen={producto.imagen}
-          agregarAlCarrito={agregarAlCarrito}
+         
         />
 
       ))
