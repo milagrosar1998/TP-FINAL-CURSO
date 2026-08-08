@@ -18,10 +18,13 @@ import {
   Presupuesto,
 } from "./components/page";
 
-import "./styles/general.css";
+import "./styles/home.css";
 import "./styles/navbar.css";
 import "./styles/hero.css";
 import "./styles/footer.css";
+import "./styles/productos.css";
+import "./styles/carrito.css";
+
 
 function App() {
 

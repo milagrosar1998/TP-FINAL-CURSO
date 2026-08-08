@@ -23,51 +23,74 @@ export default function Carrito() {
   });
 
   return (
-    <section>
+    <main className="carrito-page">
+
       <h1>Carrito de compras</h1>
 
       {carrito.length === 0 ? (
-        <p>El carrito está vacío.</p>
+        <div className="carrito-vacio">
+          <i className="bi bi-cart-x"></i>
+
+          <p>El carrito está vacío.</p>
+        </div>
         //si es 0 muestra el carrito vacio
       ) : ( //si no
         <>
-          {carrito.map((producto, indice) => (
-            <article key={indice}>
-              <img
-                src={producto.imagen}
-                alt={producto.nombre}
-                width="150"
-              />
+          <section className="carrito-productos">
+            {carrito.map((producto, indice) => (
+              <article className="carrito-producto" key={indice}>
+                <img
+                  src={producto.imagen}
+                  alt={producto.nombre}
+                  width="150"
+                />
+                <div className="carrito-info">
+                  <h2>{producto.nombre}</h2>
 
-              <h2>{producto.nombre}</h2>
+                  <p>{producto.descripcion}</p>
 
-              <p>{producto.descripcion}</p>
+                  <strong>
+                    {"$ " + producto.precio}
+                  </strong>
+                </div>
 
-              <p>{"$ " + producto.precio}</p>
+                <button className="carrito-eliminar"
+                  onClick={() => dispatch(eliminarProducto(indice))}
+                >
+                  <i className="bi bi-trash3"></i>
+                  Eliminar
+                </button>
 
-              <button
-                onClick={() => dispatch(eliminarProducto(indice))}
+
+              </article>
+            ))}
+          </section>
+
+          <section className="carrito-resumen">
+            <h2>Resumen de compra</h2>
+
+            <p>
+              Productos: {carrito.length}
+            </p>
+
+            <h3>
+              {"Total: $ " + total}
+            </h3>
+
+            <div className="carrito-acciones">
+              <button className="boton-vaciar"
+                onClick={() => dispatch(vaciarCarrito())}
               >
-                Eliminar
+                Vaciar carrito
               </button>
 
-
-            </article>
-          ))}
-
-          <h2>{"Total: $ " + total}</h2>
-
-          <button
-            onClick={() => dispatch(vaciarCarrito())}
-          >
-            Vaciar carrito
-          </button>
-
-          <button>
-            Finalizar compra
-          </button>
+              <button className="boton-finalizar">
+                Finalizar compra
+              </button>
+            </div>
+          </section>
         </>
       )}
-    </section>
+    </main>
   );
 }

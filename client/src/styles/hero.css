@@ -1,46 +1,138 @@
 .hero {
-  min-height: 75vh;
-  background-image:
-    linear-gradient(
-      rgba(0, 0, 0, 0.65),
-      rgba(0, 0, 0, 0.65)
-    ),
-    url("../assets/hero.png");
-
-  background-size: cover;
-  background-position: center;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  text-align: center;
-  color: white;
-  padding: 40px 20px;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    color: white;
 }
 
-.hero h1 {
-  font-size: 48px;
-  color: #f2c200;
-  margin-bottom: 10px;
+
+/* El carrusel ocupa todo el hero */
+
+.hero .carousel {
+    width: 100%;
+    height: 100%;
 }
 
-.hero h2 {
-  font-size: 32px;
-  margin-bottom: 20px;
+
+.hero .carousel-inner {
+    width: 100%;
+    height: 100%;
 }
 
-.hero p {
-  max-width: 700px;
-  margin: 0 auto 30px;
-  font-size: 18px;
+
+.hero .carousel-item {
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 
-.hero button {
-  background-color: #f2c200;
-  color: #111;
-  padding: 12px 24px;
-  margin: 8px;
-  font-weight: bold;
-  border-radius: 4px;
+
+/* todas las imagenes con el ismo tamaño */
+
+.hero .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+/* oscurece la imagen para poder ver lo que esta escrito */
+
+.hero .carousel-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+}
+
+
+/* texto del carrusel */
+
+.hero .carousel-caption {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 10%;
+    right: 10%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 2;
+
+    text-align: center;
+}
+
+
+.hero .carousel-caption h1 {
+    font-size: 55px;
+    color: #f2c200;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+
+.hero .carousel-caption h3 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+
+.hero .carousel-caption p {
+    max-width: 750px;
+    font-size: 19px;
+    margin-bottom: 25px;
+}
+
+
+/* mis botones */
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    position: relative;
+    z-index: 3;
+}
+
+
+.hero-buttons button {
+    background-color: #f2c200;
+    color: black;
+
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+
+    font-weight: bold;
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+
+.hero-buttons button:hover {
+    background-color: #d8ad00;
+}
+
+
+/*flechas del carrusel */
+
+.hero .carousel-control-prev,
+.hero .carousel-control-next {
+    width: 8%;
+    z-index: 4;
+}
+
+
+.hero .carousel-indicators {
+    z-index: 4;
 }

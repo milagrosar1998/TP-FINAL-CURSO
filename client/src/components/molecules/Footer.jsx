@@ -1,8 +1,11 @@
 export default function Footer() {
+
+
   return (
-    <footer>
-      <div>
-        <h5>S MULTIPRO</h5>
+    <footer className="footer">
+
+      <div className="footer-bloque">
+        <h3>S MULTIPRO</h3>
         <p>
           Construcción en seco, remodelaciones y soluciones
           para tus proyectos.
@@ -12,20 +15,27 @@ export default function Footer() {
         </p>
       </div>
 
-      <div>
-        <h6>Contacto</h6>
-        <p>📞 WhatsApp: 38400000</p>
-        <p>✉ Email: sergio0000@smultipro.com</p>
+      <div className="footer-bloque">
+
+        <h5>Contacto</h5>
+        <p>
+          <i className="bi bi-whatsapp"></i>
+          {" "} 38400000</p>
+        <p>
+          <i className="bi bi-envelope-fill"></i>
+          {" "}sergio0000@smultipro.com</p>
       </div>
 
-      <div>
-        <h6>Ubicación</h6>
+      <div className="footer-bloque">
+        <h5>Ubicación</h5>
 
-        <p>📍 Loreto - Santiago del Estero</p>
-    
+        <p>
+          <i className="bi bi-geo-alt-fill"></i>
+          {" "} Loreto - Santiago del Estero</p>
+
       </div>
 
-      <div>
+      <div className="footer-bloque">
         <p>
           10 años construyendo confianza y acompañando tus proyectos.
         </p>
@@ -34,7 +44,7 @@ export default function Footer() {
           © 2026 S MULTIPRO
         </p>
       </div>
-      
+
     </footer>
   );
 }

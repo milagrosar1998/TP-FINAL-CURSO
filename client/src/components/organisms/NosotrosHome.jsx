@@ -1,6 +1,6 @@
 export default function NosotrosHome() {
     return (
-        <section>
+        <section className="home-section nosotros-home">
             <h2>¿Quiénes somos?</h2>
 
             <p>

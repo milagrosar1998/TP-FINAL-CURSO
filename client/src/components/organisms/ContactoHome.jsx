@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function ContactoHome() {
   return (
-    <section>
+    <section className="home-section contacto-home">
 
       <h2>¿Tenés un proyecto?</h2>
 
@@ -12,7 +12,7 @@ export default function ContactoHome() {
         la mejor solución.
       </p>
 
-      <Link to="/presupuesto">
+      <Link to="/presupuesto"  className="home-boton">
         Solicitar presupuesto
       </Link>
 

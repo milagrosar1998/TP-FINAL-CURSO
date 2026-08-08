@@ -1,26 +1,21 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import logo from "../../assets/logo.png";
 
 export default function Navbar() {
-
-const cantidadCarrito = useSelector(
-  (state) => state.carrito.productos.length
-);
-
-
-
-
+  const cantidadCarrito = useSelector(
+    (state) => state.carrito.productos.length
+  );
 
   return (
     <nav className="navbar">
 
-      <div className="logo">
+      <Link to="/" className="navbar-logo">
+        <img src={logo} alt="Logo S MULTIPRO" />
 
-        <h2>
-          S MULTIPRO
-        </h2>
-      </div>
+        <span>S MULTIPRO</span>
+      </Link>
+
 
       <ul className="menu">
         <li><Link to="/">Inicio</Link></li>
@@ -30,15 +25,12 @@ const cantidadCarrito = useSelector(
         <li><Link to="/contacto">Contacto</Link></li>
         <li><Link to="/login">Ingresar</Link></li>
         <li><Link to="/registro">Registrarse</Link></li>
-        <li><Link to="/carrito">
-          Carrito ({cantidadCarrito})
+        <li><Link to="/carrito" className="carrito-link">
+          <i className="bi bi-cart3"></i>
+          <span>{cantidadCarrito}</span>
         </Link></li>
 
-
-
       </ul>
-
-
     </nav>
   )
 

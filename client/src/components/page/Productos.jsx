@@ -23,43 +23,46 @@ export default function Productos() {
 
 
   return (
-    <section>
-      <h1>Catálogo de productos</h1>
+    <main className="productos-page">
+      <section className="productos-header">
+        <h1>Catálogo de productos</h1>
 
-      <p>
-        Encontrá materiales e insumos para construcción en seco,
-        remodelaciones y terminaciones.
-      </p>
-
-
-      <input
-        type="text"
-        placeholder="Buscar productos..."
-        value={busqueda}
-        onChange={(e) => setBusqueda(e.target.value)}
-      />
+        <p>
+          Encontrá materiales e insumos para construcción en seco,
+          remodelaciones y terminaciones.
+        </p>
 
 
-
-
-
-      {productosFiltrados.map((producto) => (
-        <ProductCard
-          key={producto.id}
-          id={producto.id}
-          nombre={producto.nombre}
-          descripcion={producto.descripcion}
-          precio={producto.precio}
-          imagen={producto.imagen}
-         
+        <input
+          className="productos-buscador"
+          type="text"
+          placeholder="Buscar productos..."
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
         />
 
-      ))
-      }
+
+      </section>
+
+      <section className="productos-grid">
+        {productosFiltrados.map((producto) => (
+          <ProductCard
+            key={producto.id}
+            id={producto.id}
+            nombre={producto.nombre}
+            descripcion={producto.descripcion}
+            precio={producto.precio}
+            imagen={producto.imagen}
+
+          />
+
+        ))
+        }
 
 
 
-    </section>
+      </section>
+    </main>
   );
 
 }
