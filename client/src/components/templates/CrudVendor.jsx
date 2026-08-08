@@ -1,7 +1,7 @@
 export default function CrudVendor() {
   return (
-    <main>
-      <section>
+    <main className="admin-page">
+      <section className="admin-form-section">
         <h1>Panel del vendedor</h1>
 
         <p>
@@ -10,35 +10,38 @@ export default function CrudVendor() {
         </p>
       </section>
 
-      <section>
+      <section lassName="admin-form-section">
         <h2>Gestión de productos</h2>
 
         <button>Agregar producto</button>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Producto</th>
-              <th>Precio</th>
-              <th>Stock</th>
-              <th>Categoría</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
+        <div className="tabla-contenedor">
+          <table className="admin-table">
 
-          <tbody>
-            <tr>
-              <td>Producto de ejemplo</td>
-              <td>$ 10.000</td>
-              <td>10</td>
-              <td>Placas</td>
-              <td>
-                <button>Editar</button>
-                <button>Eliminar</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>Producto de ejemplo</td>
+                <td>$ 10.000</td>
+                <td>10</td>
+                <td>Placas</td>
+                <td>
+                  <button>Editar</button>
+                  <button>Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
       </section>
 
       <section>
@@ -57,5 +60,6 @@ export default function CrudVendor() {
         </p>
       </section>
     </main>
+   
   );
 }

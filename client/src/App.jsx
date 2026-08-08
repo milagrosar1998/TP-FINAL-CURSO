@@ -24,7 +24,11 @@ import "./styles/hero.css";
 import "./styles/footer.css";
 import "./styles/productos.css";
 import "./styles/carrito.css";
-
+import "./styles/formularios.css";
+import "./styles/admin.css";
+import "./styles/servicios.css";
+import "./styles/nosotros.css";
+import "./styles/contacto.css";
 
 function App() {
 

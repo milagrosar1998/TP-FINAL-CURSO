@@ -14,5 +14,6 @@ export const loginFields = [
         placeholder: "Ingresá tu contraseña",
         name: "password",
         required: true,
+        minLength: 6,
     },
 ];

@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 export default function Servicios() {
   return (
-    <main>
-      <section>
+    <main className="servicios-page">
+      <section className="servicios-contenedor">
         <h1>Nuestros servicios</h1>
 
         <p>
@@ -11,7 +11,7 @@ export default function Servicios() {
           y obras de diferentes escalas.
         </p>
 
-        <article>
+        <article className="servicio-card">
           <h2>Construcción en seco</h2>
 
           <p>
@@ -24,7 +24,7 @@ export default function Servicios() {
           </Link>
         </article>
 
-        <article>
+        <article className="servicio-card">
           <h2>Remodelaciones y ampliaciones</h2>
 
           <p>
@@ -37,7 +37,7 @@ export default function Servicios() {
           </Link>
         </article>
 
-        <article>
+        <article className="servicio-card">
           <h2>Electricidad</h2>
 
           <p>
@@ -50,7 +50,7 @@ export default function Servicios() {
           </Link>
         </article>
 
-        <article>
+        <article className="servicio-card">
           <h2>Pintura</h2>
 
           <p>
@@ -61,8 +61,20 @@ export default function Servicios() {
             Solicitar presupuesto
           </Link>
         </article>
+        <article className="servicio-card">
+          <h2>Soldaduras en general</h2>
 
-        <article>
+          <p>
+            Realizamos trabajos de soldadura, reparaciones y estructuras
+            metálicas para proyectos pequeños y de mayor escala.
+          </p>
+
+          <Link to="/presupuesto">
+            Solicitar presupuesto
+          </Link>
+        </article>
+
+        <article className="servicio-card">
           <h2>Reparaciones y mantenimiento</h2>
 
           <p>
@@ -75,7 +87,7 @@ export default function Servicios() {
           </Link>
         </article>
 
-        <article>
+        <article className="servicio-card">
           <h2>¿Necesitás otro tipo de trabajo?</h2>
 
           <p>

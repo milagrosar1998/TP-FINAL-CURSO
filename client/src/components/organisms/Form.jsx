@@ -10,9 +10,6 @@ export default function Form({
   return (
     <form className={className} onSubmit={formSubmit}>
       <Heading size="h1" text={formTitle} />
-
-
-
       {inputs.length ? (inputs.map((input) => (
         <InputLabel
           key={input.inputId}
@@ -25,7 +22,6 @@ export default function Form({
       ) : (
            <p>No hay campos disponibles.</p>
       )}
-      
       <button type="submit">{formTitle}</button>
     </form>
   );

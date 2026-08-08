@@ -32,95 +32,104 @@ export default function Presupuesto() {
   }
 
   return (
-    <section>
-      <h1>Solicitar presupuesto</h1>
 
-      <p>
-        Contanos sobre tu proyecto y nos comunicaremos con vos
-        para brindarte una propuesta personalizada.
-      </p>
+    <main className="presupuesto-page">
 
-      <form onSubmit={enviarPresupuesto}>
-        <div>
-          <label htmlFor="servicio">Servicio</label>
+      <section className="presupuesto-contenedor">
+        <h1>Solicitar presupuesto</h1>
 
-          <select
-            id="servicio"
-            name="servicio"
-            value={presupuesto.servicio}
-            onChange={manejarCambio}
-            required
-          >
-            <option value="">Seleccioná un servicio</option>
-            <option value="Construcción en seco">
-              Construcción en seco
-            </option>
-            <option value="Remodelación">
-              Remodelación
-            </option>
-            <option value="Electricidad">
-              Electricidad
-            </option>
-            <option value="Pintura">
-              Pintura
-            </option>
-            <option value="Reparación">
-              Reparación
-            </option>
-            <option value="Otro">
-              Otro
-            </option>
-          </select>
-        </div>
+        <p className="presupuesto-intro">
+          Contanos sobre tu proyecto y nos comunicaremos con vos
+          para brindarte una propuesta personalizada.
+        </p>
 
-        <div>
-          <label htmlFor="direccion">
-            Dirección de la obra
-          </label>
+        <form className="presupuesto-form"
+          onSubmit={enviarPresupuesto}>
 
-          <input
-            id="direccion"
-            name="direccion"
-            type="text"
-            value={presupuesto.direccion}
-            onChange={manejarCambio}
-            required
-          />
-        </div>
+          <div>
+            <label htmlFor="servicio">Servicio</label>
 
-        <div>
-          <label htmlFor="metrosCuadrados">
-            Metros cuadrados
-          </label>
+            <select
+              id="servicio"
+              name="servicio"
+              value={presupuesto.servicio}
+              onChange={manejarCambio}
+              required
+            >
+              <option value="">Seleccioná un servicio</option>
+              <option value="Construcción en seco">
+                Construcción en seco
+              </option>
+              <option value="Remodelación">
+                Remodelación
+              </option>
+              <option value="Electricidad">
+                Electricidad
+              </option>
+              <option value="Pintura">
+                Pintura
+              </option>
+              <option value="Soldaduras">
+                Soldaduras
+              </option>
+              <option value="Reparaciones">
+                Reparaciones y mantenimiento
+              </option>
+              <option value="Otro">
+                Otro trabajo
+              </option>
+            </select>
+          </div>
 
-          <input
-            id="metrosCuadrados"
-            name="metrosCuadrados"
-            type="number"
-            min="0"
-            value={presupuesto.metrosCuadrados}
-            onChange={manejarCambio}
-          />
-        </div>
+          <div>
+            <label htmlFor="direccion">
+              Dirección de la obra
+            </label>
 
-        <div>
-          <label htmlFor="descripcion">
-            Descripción del trabajo
-          </label>
+            <input
+              id="direccion"
+              name="direccion"
+              type="text"
+              value={presupuesto.direccion}
+              onChange={manejarCambio}
+              required
+            />
+          </div>
 
-          <textarea
-            id="descripcion"
-            name="descripcion"
-            value={presupuesto.descripcion}
-            onChange={manejarCambio}
-            required
-          />
-        </div>
+          <div>
+            <label htmlFor="metrosCuadrados">
+              Metros cuadrados
+            </label>
 
-        <button type="submit">
-          Enviar solicitud
-        </button>
-      </form>
-    </section>
+            <input
+              id="metrosCuadrados"
+              name="metrosCuadrados"
+              type="number"
+              min="0"
+              value={presupuesto.metrosCuadrados}
+              onChange={manejarCambio}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="descripcion">
+              Descripción del trabajo
+            </label>
+
+            <textarea
+              id="descripcion"
+              name="descripcion"
+              value={presupuesto.descripcion}
+              onChange={manejarCambio}
+              required
+            />
+          </div>
+
+          <button type="submit">
+            Enviar solicitud
+          </button>
+        </form>
+      </section>
+    </main>
   );
 }

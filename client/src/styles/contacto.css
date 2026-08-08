@@ -1,0 +1,102 @@
+.contacto-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 60px 20px;
+}
+
+.contacto-contenedor {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contacto-contenedor > h1 {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.contacto-intro {
+  font-size: 18px;
+  color: #555;
+
+  margin-bottom: 40px;
+}
+
+.contacto-datos {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+
+  margin-bottom: 40px;
+}
+
+.contacto-card {
+  background-color: white;
+  padding: 35px 20px;
+  border-radius: 8px;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.contacto-card i {
+  color: #f2c200;
+  font-size: 40px;
+}
+
+.contacto-card h2 {
+  margin: 15px 0 10px;
+  font-size: 22px;
+}
+
+.contacto-card p {
+  color: #555;
+}
+
+.contacto-presupuesto {
+  background-color: #111;
+  color: white;
+
+  padding: 40px;
+  border-radius: 8px;
+}
+
+.contacto-presupuesto h2 {
+  color: #f2c200;
+
+  margin-bottom: 15px;
+}
+
+.contacto-presupuesto p {
+  margin-bottom: 25px;
+}
+
+.contacto-presupuesto a {
+  display: inline-block;
+
+  background-color: #f2c200;
+  color: #111;
+
+  padding: 12px 22px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.contacto-presupuesto a:hover {
+  background-color: #d8ad00;
+}
+
+@media (max-width: 750px) {
+
+  .contacto-datos {
+    grid-template-columns: 1fr;
+  }
+
+  .contacto-page {
+    padding: 40px 15px;
+  }
+
+}

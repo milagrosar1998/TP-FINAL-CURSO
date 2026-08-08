@@ -2,8 +2,6 @@ import { useState } from "react";
 import { products } from "../../data/products";
 
 
-
-
 export default function CrudAdmin() {
 
 
@@ -22,6 +20,56 @@ export default function CrudAdmin() {
 
   const [editandoId, setEditandoId] = useState(null);
   //diferencia con el numero de id si esta creando o editando
+
+
+
+  //info temporal
+  const usuarios = [
+    {
+      id: 1,
+      nombre: "Juan Pérez",
+      email: "juan@email.com",
+      rol: "usuario",
+    },
+    {
+      id: 2,
+      nombre: "Ana Gómez",
+      email: "ana@email.com",
+      rol: "vendedor",
+    },
+    {
+      id: 3,
+      nombre: "Pedro López",
+      email: "pedro@email.com",
+      rol: "usuario",
+    },
+  ];
+
+  const presupuestos = [
+    {
+      id: 1,
+      cliente: "Juan Pérez",
+      servicio: "Construcción en seco",
+      metrosCuadrados: 35,
+      estado: "Pendiente",
+    },
+    {
+      id: 2,
+      cliente: "Pedro López",
+      servicio: "Soldaduras",
+      metrosCuadrados: 0,
+      estado: "En revisión",
+    },
+  ];
+  //info temporal
+
+  const usuariosComunes = usuarios.filter(
+    (usuario) => usuario.rol === "usuario"
+  ); //usuarios solo con rol de usuarios
+
+  const vendedores = usuarios.filter(
+    (usuario) => usuario.rol === "vendedor"
+  ); //usuarios con rol de vendedores
 
   function manejarCambio(evento) {
     const { name, value } = evento.target;
@@ -114,8 +162,8 @@ export default function CrudAdmin() {
 
 
   return (
-    <main>
-      <section>
+    <main className="admin-page">
+      <section className="admin-header">
         <h1>Panel de administración</h1>
 
         <p>
@@ -126,7 +174,7 @@ export default function CrudAdmin() {
 
 
 
-      <section>
+      <section className="admin-form-section">
         <h2>
           {editandoId !== null
             ? "Editar producto"
@@ -134,7 +182,8 @@ export default function CrudAdmin() {
         </h2>
 
 
-        <form onSubmit={guardarProducto}>
+        <form className="admin-form"
+          onSubmit={guardarProducto}>
           <div>
             <label htmlFor="nombre">Nombre</label>
 
@@ -222,13 +271,13 @@ export default function CrudAdmin() {
         </form>
       </section>
 
-      <section>
+      <section className="admin-table-section">
         <h2>Productos</h2>
 
         {productos.length === 0 ? (
           <p>No hay productos cargados.</p>
         ) : (
-          <table>
+          <table className="admin-table">
             <thead>
               <tr>
                 <th>Producto</th>
@@ -239,7 +288,7 @@ export default function CrudAdmin() {
               </tr>
             </thead>
 
-{/*recorre los productos creando una fila por cada uno*/}
+            {/*recorre los productos creando una fila por cada uno*/}
             <tbody>
               {productos.map((producto) => (
                 <tr key={producto.id}>
@@ -272,6 +321,128 @@ export default function CrudAdmin() {
         )}
       </section>
 
+      <section className="admin-table-section">
+        <h2>Usuarios</h2>
+
+        <div className="tabla-contenedor">
+          <table className="admin-table">
+
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {usuariosComunes.map((usuario) => (
+                <tr key={usuario.id}>
+                  <td>{usuario.nombre}</td>
+                  <td>{usuario.email}</td>
+
+                  <td>
+                    <button type="button">
+                      Hacer vendedor
+                    </button>
+
+                    <button type="button">
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+
+          </table>
+        </div>
+      </section>
+
+
+
+      <section className="admin-table-section">
+        <h2>Vendedores</h2>
+
+        <div className="tabla-contenedor">
+          <table className="admin-table">
+
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {vendedores.map((vendedor) => (
+                <tr key={vendedor.id}>
+                  <td>{vendedor.nombre}</td>
+                  <td>{vendedor.email}</td>
+
+                  <td>
+                    <button type="button">
+                      Quitar vendedor
+                    </button>
+
+                    <button type="button">
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+
+          </table>
+        </div>
+      </section>
+
+
+
+
+      <section className="admin-table-section">
+        <h2>Presupuestos solicitados</h2>
+
+        <div className="tabla-contenedor">
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Servicio</th>
+                <th>Metros²</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {presupuestos.map((presupuesto) => (
+                <tr key={presupuesto.id}>
+                  <td>{presupuesto.cliente}</td>
+                  <td>{presupuesto.servicio}</td>
+
+                  <td>
+                    {presupuesto.metrosCuadrados > 0
+                      ? presupuesto.metrosCuadrados
+                      : "No corresponde"}
+                  </td>
+
+                  <td>{presupuesto.estado}</td>
+
+                  <td>
+                    <button type="button">
+                      Ver
+                    </button>
+
+                    <button type="button">
+                      Cambiar estado
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
 
 
 

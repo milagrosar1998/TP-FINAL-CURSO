@@ -77,7 +77,7 @@ export const registerFields = [
         placeholder: "Ingresá tu provincia",
         name: "provincia",
         required: true,
-        minLength: 5,
+        minLength: 2,
         maxLength: 50,
     },
 

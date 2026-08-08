@@ -1,8 +1,8 @@
 
 export default function Nosotros() {
   return (
-    <main>
-      <section>
+    <main className="nosotros-page">
+      <section className="nosotros-contenedor">
         <h1>Nosotros</h1>
 
         <p>
@@ -17,7 +17,7 @@ export default function Nosotros() {
         </p>
       </section>
 
-      <section>
+      <section className="nosotros-bloque">
         <h2>Nuestra forma de trabajar</h2>
 
         <p>
@@ -27,7 +27,7 @@ export default function Nosotros() {
         </p>
       </section>
 
-      <section>
+      <section className="nosotros-bloque">
         <h2>Atención personalizada</h2>
 
         <p>
@@ -37,17 +37,46 @@ export default function Nosotros() {
         </p>
       </section>
 
-      <section>
-        <h2>Nuestro compromiso</h2>
+      <section className="nosotros-bloque compromiso">
+  <h2>Nuestro compromiso</h2>
 
-        <ul>
-          <li>Calidad en cada trabajo</li>
-          <li>Responsabilidad</li>
-          <li>Atención personalizada</li>
-          <li>Asesoramiento durante el proyecto</li>
-          <li>Transparencia en los presupuestos</li>
-        </ul>
-      </section>
+  <div className="compromiso-contenedor">
+
+    <div className="compromiso-item">
+      <i className="bi bi-award"></i>
+      <h3>Calidad en cada trabajo</h3>
+      <p>
+        Utilizamos materiales de calidad y técnicas adecuadas.
+      </p>
+    </div>
+
+    <div className="compromiso-item">
+      <i className="bi bi-shield-check"></i>
+      <h3>Responsabilidad</h3>
+      <p>
+        Cumplimos con los tiempos acordados y cada compromiso.
+      </p>
+    </div>
+
+    <div className="compromiso-item">
+      <i className="bi bi-people"></i>
+      <h3>Atención personalizada</h3>
+      <p>
+        Escuchamos tus ideas y te acompañamos durante todo el proceso.
+      </p>
+    </div>
+
+    <div className="compromiso-item">
+      <i className="bi bi-clipboard-check"></i>
+      <h3>Asesoramiento durante el proyecto</h3>
+      <p>
+        Brindamos orientación en cada etapa para lograr el mejor resultado.
+      </p>
+    </div>
+
+    
+  </div>
+</section>
     </main>
   );
 }

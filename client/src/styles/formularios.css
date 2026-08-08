@@ -1,0 +1,153 @@
+.login-form,
+.register-form {
+  width: 90%;
+  max-width: 520px;
+  margin: 60px auto;
+  padding: 35px;
+
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+.login-form h1,
+.register-form h1 {
+  text-align: center;
+
+  margin-bottom: 30px;
+
+  color: #111;
+}
+
+.login-form > div,
+.register-form > div {
+  margin-bottom: 18px;
+}
+
+.login-form label,
+.register-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.login-form input,
+.register-form input {
+  width: 100%;
+
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.login-form input:focus,
+.register-form input:focus {
+  outline: none;
+  border-color: #f2c200;
+}
+
+.login-form button,
+.register-form button {
+  width: 100%;
+
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+
+  background-color: #f2c200;
+  color: #111;
+
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-form button:hover,
+.register-form button:hover {
+  background-color: #d8ad00;
+}
+
+.presupuesto-page {
+  width: 100%;
+  min-height: 70vh;
+
+  background-color: #f5f5f5;
+  padding: 60px 20px;
+}
+
+.presupuesto-contenedor {
+  width: 90%;
+  max-width: 700px;
+
+  margin: 0 auto;
+
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+.presupuesto-contenedor h1 {
+  text-align: center;
+
+  margin-bottom: 15px;
+}
+
+.presupuesto-intro {
+  text-align: center;
+
+  margin-bottom: 30px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.presupuesto-form > div {
+  margin-bottom: 18px;
+}
+
+.presupuesto-form label {
+  display: block;
+
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.presupuesto-form input,
+.presupuesto-form select,
+.presupuesto-form textarea {
+  width: 100%;
+
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.presupuesto-form textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+.presupuesto-form input:focus,
+.presupuesto-form select:focus,
+.presupuesto-form textarea:focus {
+  outline: none;
+  border-color: #f2c200;
+}
+
+.presupuesto-form button {
+  width: 100%;
+
+  padding: 13px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f2c200;
+  color: #111;
+
+  font-weight: bold;
+}
+
+.presupuesto-form button:hover {
+  background-color: #d8ad00;
+}
