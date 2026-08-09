@@ -1,23 +1,31 @@
-import crearProducto from "../servicios/crearProducto.js";
-import obtenerTodosLosProductos from "../servicios/obtenerTodosLosProductos.js";
-import obtenerUnProducto from "../servicios/obtenerUnProducto.js";
+import crearProducto from "../servicios/producto/crearProducto.js";
+import obtenerTodosLosProductos from "../servicios/producto/obtenerTodosLosProductos.js";
+import obtenerUnProducto from "../servicios/producto/obtenerUnProducto.js";
+import actualizarProducto from "../servicios/producto/actualizarProducto.js";
+import eliminarProducto from "../servicios/producto/eliminarProducto.js";
 
-export const crearProductoControl = async (req, res) => { // contiene los datos que mande la herramienta de prueba, por el momento
+export const crearProductoControl = async (req, res) => {
 
-    try {                                               // trabaja con mongoose   "Creá un producto con estos datos y guardalo en MongoDB."
-        const producto = await crearProducto(req.body); //req.body contiene lo que mandamos desde Insomnia. y esos datos van a creearProducto.
+    try {
+        const datosProducto = {
+            ...req.body,
+            vendedorId: req.usuario.id
+        };
 
-        res.status(201).json(producto); // respuesta de q se creo correctamente
+        const producto = await crearProducto(datosProducto);
+
+        res.status(201).json(producto);
+
     } catch (error) {
 
         res.status(500).json({
-            mensaje: "Error, el producto no se cargo",
+            mensaje: "Error al crear el producto",
             error: error.message
         });
 
     }
 
-}
+};
 
 export const obtenerTodosLosProductosControl = async (req, res) => {
 
@@ -44,7 +52,7 @@ export const obtenerUnProductoControl = async (req, res) => {
 
         if (producto === null) { // Si MongoDB no encontró ningún producto con ese id...
             return res.status(404).json({
-                mensaje: "No se Encontró el producto"
+                mensaje: "No se encontró el producto"
             });
         } else {
             res.status(200).json(producto);
@@ -53,6 +61,67 @@ export const obtenerUnProductoControl = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             mensaje: "Error al obtener el producto",
+            error: error.message
+        });
+    }
+};
+
+export const actualizarProductoControl = async (req, res) => {
+
+    try {
+
+        const id = req.params.id; // Obtiene el id que viene en la URL.
+
+        const datosActualizados = req.body; // guarda lo que mande el cliente en el body
+
+        const productoActualizado = await actualizarProducto(
+            id,
+            datosActualizados
+        );
+
+        if (productoActualizado === null) { // "¿MongoDB no encontró ningún producto con ese id?"
+
+            return res.status(404).json({
+                mensaje: "No se encontró el producto"
+            });
+
+        } else {
+
+            res.status(200).json(productoActualizado);
+
+        }
+
+    } catch (error) {
+
+        res.status(500).json({
+            mensaje: "Error al actualizar el producto",
+            error: error.message
+        });
+
+    }
+
+};
+
+export const eliminarProductoControl = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const productoEliminado = await eliminarProducto(id);
+
+        if (productoEliminado === null) {
+            return res.status(404).json({
+                mensaje: "No se encontró el producto"
+            });
+        } else {
+            res.status(200).json({
+                mensaje: "Producto eliminado correctamente",
+                producto: productoEliminado
+            });
+        }
+
+    } catch (error) {
+        res.status(500).json({
+            mensaje: "Error al eliminar el producto",
             error: error.message
         });
     }

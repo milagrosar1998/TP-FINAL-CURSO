@@ -1,4 +1,4 @@
-import Producto from "../modelos/productoSchema.js";
+import Producto from "../../modelos/productoSchema.js";
 
 const obtenerUnProducto = async (id) => { // recibe un id, 
     const producto = await Producto.findById(id);// busca en mongoDb un producto que tenga ese id

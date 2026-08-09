@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { products } from "../../data/products";
+import { useEffect, useState } from "react";
+import api from "../../services/api";
 
 
 export default function CrudAdmin() {
 
 
-  const [productos, setProductos] = useState(products);
+  const [productos, setProductos] = useState([]);
   //guarda los productos que se muestran en la tabla
 
   const [productoActual, setProductoActual] = useState({
@@ -21,47 +21,175 @@ export default function CrudAdmin() {
   const [editandoId, setEditandoId] = useState(null);
   //diferencia con el numero de id si esta creando o editando
 
+  const [usuarios, setUsuarios] = useState([]);
 
+  const [presupuestos, setPresupuestos] = useState([]);
 
-  //info temporal
-  const usuarios = [
-    {
-      id: 1,
-      nombre: "Juan Pérez",
-      email: "juan@email.com",
-      rol: "usuario",
-    },
-    {
-      id: 2,
-      nombre: "Ana Gómez",
-      email: "ana@email.com",
-      rol: "vendedor",
-    },
-    {
-      id: 3,
-      nombre: "Pedro López",
-      email: "pedro@email.com",
-      rol: "usuario",
-    },
-  ];
+  const [presupuestoSeleccionado, setPresupuestoSeleccionado] = useState(null);
 
-  const presupuestos = [
-    {
-      id: 1,
-      cliente: "Juan Pérez",
-      servicio: "Construcción en seco",
-      metrosCuadrados: 35,
-      estado: "Pendiente",
-    },
-    {
-      id: 2,
-      cliente: "Pedro López",
-      servicio: "Soldaduras",
-      metrosCuadrados: 0,
-      estado: "En revisión",
-    },
-  ];
-  //info temporal
+  const [pedidos, setPedidos] = useState([]);
+
+  async function cargarProductos() {
+
+    try {
+      const respuesta = await api.get("/productos");
+
+      setProductos(respuesta.data);
+
+    } catch (error) {
+
+      console.log("Error al cargar productos", error);
+
+    }
+
+  }
+
+  async function cargarUsuarios() {
+
+    const token = localStorage.getItem("token");
+
+    try {
+
+      const respuesta = await api.get(
+        "/usuarios",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      setUsuarios(respuesta.data);
+
+    } catch (error) {
+
+      console.log("Error al cargar usuarios", error);
+
+    }
+
+  }
+  async function guardarProducto(evento) {
+
+    evento.preventDefault();
+
+    const token = localStorage.getItem("token");
+
+    const productoPreparado = {
+      ...productoActual,
+      precio: Number(productoActual.precio),
+      stock: Number(productoActual.stock)
+    };
+
+    try {
+
+      if (editandoId !== null) {
+
+        await api.put(
+          `/productos/${editandoId}`,
+          productoPreparado,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+      } else {
+
+        await api.post(
+          "/productos",
+          productoPreparado,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+      }
+
+      await cargarProductos();
+
+      setEditandoId(null);
+
+      setProductoActual({
+        nombre: "",
+        precio: "",
+        descripcion: "",
+        stock: "",
+        categoria: "",
+        imagen: ""
+      });
+
+    } catch (error) {
+
+      alert(
+        error.response?.data?.mensaje ||
+        "Error al guardar el producto"
+      );
+
+    }
+
+  }
+
+  async function cargarPresupuestos() {
+
+    const token = localStorage.getItem("token");
+
+    try {
+
+      const respuesta = await api.get(
+        "/presupuestos",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      setPresupuestos(respuesta.data);
+
+    } catch (error) {
+
+      console.log("Error al cargar presupuestos", error);
+
+    }
+
+  }
+
+  async function cargarPedidos() {
+
+    const token = localStorage.getItem("token");
+
+    try {
+
+      const respuesta = await api.get(
+        "/pedidos",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      setPedidos(respuesta.data);
+
+    } catch (error) {
+
+      console.log("Error al cargar pedidos", error);
+
+    }
+
+  }
+
+  useEffect(() => {
+
+    cargarProductos();
+    cargarUsuarios();
+    cargarPresupuestos();
+    cargarPedidos();
+
+  }, []);
 
   const usuariosComunes = usuarios.filter(
     (usuario) => usuario.rol === "usuario"
@@ -82,49 +210,6 @@ export default function CrudAdmin() {
   //ademas conservando la informacion que tenia
 
 
-  function guardarProducto(evento) {
-    evento.preventDefault();
-    //no recarga la pagina 
-    const productoPreparado = {
-      ...productoActual,
-      precio: Number(productoActual.precio),
-      stock: Number(productoActual.stock),
-    };//convierte precio y stock a numeros
-
-    // si hay un id guardado lo modifica si no lo crea
-    if (editandoId !== null) {
-      const productosActualizados = productos.map((producto) =>
-        producto.id === editandoId
-          ? {
-            ...productoPreparado,
-            id: editandoId,
-          }
-          : producto
-      );
-
-      setProductos(productosActualizados);
-      setEditandoId(null);
-    } else {
-      const nuevoProducto = {
-        ...productoPreparado,
-        id: Date.now(),//Date.now crea un numero temporal
-      };
-      //si no estamos editando crea uno nuevo 
-
-      setProductos([...productos, nuevoProducto]);
-    }
-    //agrega al final el nuevo producto
-
-    setProductoActual({
-      nombre: "",
-      precio: "",
-      descripcion: "",
-      stock: "",
-      categoria: "",
-      imagen: "",
-    });//despues de guardar limpia el formulario
-  }
-
   function prepararEdicion(producto) {
     //recibe el productr sobre el que precione editar
     setProductoActual({
@@ -136,30 +221,152 @@ export default function CrudAdmin() {
       imagen: producto.imagen,
     });//carga los datos que tiene dentro del formulario
 
-    setEditandoId(producto.id);
+    setEditandoId(producto._id);
     //al enviar sabe coon el id que producto modificar
   }
 
 
-  function eliminarProducto(id) {
-    const productosActualizados = productos.filter(
-      (producto) => producto.id !== id
-    );
-    //elimina el producto con ese id
+  async function eliminarProducto(id) {
 
-    setProductos(productosActualizados);
+    const token = localStorage.getItem("token");
+
+    try {
+
+      await api.delete(
+        `/productos/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      await cargarProductos();
+
+    } catch (error) {
+
+      alert(
+        error.response?.data?.mensaje ||
+        "Error al eliminar el producto"
+      );
+
+    }
+
   }
 
+  async function cambiarRol(id, rol) {
 
+    const token = localStorage.getItem("token");
 
+    try {
 
+      await api.put(
+        `/usuarios/${id}/rol`,
+        { rol: rol },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
+      await cargarUsuarios();
 
+    } catch (error) {
 
+      alert(
+        error.response?.data?.mensaje ||
+        "Error al cambiar el rol"
+      );
 
+    }
 
+  }
 
+  async function eliminarUsuario(id) {
 
+    const token = localStorage.getItem("token");
+
+    try {
+
+      await api.delete(
+        `/usuarios/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      await cargarUsuarios();
+
+    } catch (error) {
+
+      alert(
+        error.response?.data?.mensaje ||
+        "Error al eliminar el usuario"
+      );
+
+    }
+
+  }
+
+  async function cambiarEstadoPresupuesto(id, estado) {
+
+    const token = localStorage.getItem("token");
+
+    try {
+
+      await api.put(
+        `/presupuestos/${id}/estado`,
+        { estado: estado },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      await cargarPresupuestos();
+
+    } catch (error) {
+
+      alert(
+        error.response?.data?.mensaje ||
+        "Error al cambiar el estado"
+      );
+
+    }
+
+  }
+  async function cambiarEstadoPedido(id, estado) {
+
+    const token = localStorage.getItem("token");
+
+    try {
+
+      await api.put(
+        `/pedidos/${id}/estado`,
+        { estado: estado },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      await cargarPedidos();
+
+    } catch (error) {
+
+      alert(
+        error.response?.data?.mensaje ||
+        "Error al cambiar el estado del pedido"
+      );
+
+    }
+
+  }
 
   return (
     <main className="admin-page">
@@ -291,7 +498,7 @@ export default function CrudAdmin() {
             {/*recorre los productos creando una fila por cada uno*/}
             <tbody>
               {productos.map((producto) => (
-                <tr key={producto.id}>
+                <tr key={producto._id}>
                   {/*key identidica cada fila*/}
                   <td>{producto.nombre}</td>
                   <td>{"$ " + producto.precio}</td>
@@ -309,7 +516,7 @@ export default function CrudAdmin() {
 
                     <button
                       type="button"
-                      onClick={() => eliminarProducto(producto.id)}
+                      onClick={() => eliminarProducto(producto._id)}
                     >
                       Eliminar
                     </button>
@@ -337,16 +544,20 @@ export default function CrudAdmin() {
 
             <tbody>
               {usuariosComunes.map((usuario) => (
-                <tr key={usuario.id}>
+                <tr key={usuario._id}>
                   <td>{usuario.nombre}</td>
                   <td>{usuario.email}</td>
 
                   <td>
-                    <button type="button">
+                    <button
+                      type="button"
+                      onClick={() => cambiarRol(usuario._id, "vendedor")}>
                       Hacer vendedor
                     </button>
 
-                    <button type="button">
+                    <button
+                      type="button"
+                      onClick={() => eliminarUsuario(usuario._id)}>
                       Eliminar
                     </button>
                   </td>
@@ -376,16 +587,20 @@ export default function CrudAdmin() {
 
             <tbody>
               {vendedores.map((vendedor) => (
-                <tr key={vendedor.id}>
+                <tr key={vendedor._id}>
                   <td>{vendedor.nombre}</td>
                   <td>{vendedor.email}</td>
 
                   <td>
-                    <button type="button">
+                    <button
+                      type="button"
+                      onClick={() => cambiarRol(vendedor._id, "usuario")}>
                       Quitar vendedor
                     </button>
 
-                    <button type="button">
+                    <button
+                      type="button"
+                      onClick={() => eliminarUsuario(vendedor._id)}>
                       Eliminar
                     </button>
                   </td>
@@ -416,8 +631,8 @@ export default function CrudAdmin() {
             </thead>
             <tbody>
               {presupuestos.map((presupuesto) => (
-                <tr key={presupuesto.id}>
-                  <td>{presupuesto.cliente}</td>
+                <tr key={presupuesto._id}>
+                  <td>{presupuesto.nombre} {presupuesto.apellido}</td>
                   <td>{presupuesto.servicio}</td>
 
                   <td>
@@ -429,21 +644,147 @@ export default function CrudAdmin() {
                   <td>{presupuesto.estado}</td>
 
                   <td>
-                    <button type="button">
+                    <button
+                      type="button"
+                      onClick={() => setPresupuestoSeleccionado(presupuesto)}>
                       Ver
                     </button>
 
-                    <button type="button">
-                      Cambiar estado
-                    </button>
+                    <select value={presupuesto.estado} onChange={(evento) => cambiarEstadoPresupuesto(
+                      presupuesto._id,
+                      evento.target.value
+                    )}>
+                      <option value="pendiente">Pendiente</option>
+                      <option value="en revision">En revisión</option>
+                      <option value="enviado">Enviado</option>
+                      <option value="aceptado">Aceptado</option>
+                      <option value="en ejecucion">En ejecución</option>
+                      <option value="finalizado">Finalizado</option>
+                    </select>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </section>
+        {presupuestoSeleccionado && (
+          <div className="detalle-presupuesto">
 
+            <h3>Detalle del presupuesto</h3>
+
+            <p>
+              <strong>Cliente:</strong>{" "}
+              {presupuestoSeleccionado.nombre}{" "}
+              {presupuestoSeleccionado.apellido}
+            </p>
+
+            <p>
+              <strong>Email:</strong>{" "}
+              {presupuestoSeleccionado.email}
+            </p>
+
+            <p>
+              <strong>Teléfono:</strong>{" "}
+              {presupuestoSeleccionado.telefono}
+            </p>
+
+            <p>
+              <strong>Dirección de obra:</strong>{" "}
+              {presupuestoSeleccionado.direccionObra}
+            </p>
+
+            <p>
+              <strong>Servicio:</strong>{" "}
+              {presupuestoSeleccionado.servicio}
+            </p>
+
+            <p>
+              <strong>Metros cuadrados:</strong>{" "}
+              {presupuestoSeleccionado.metrosCuadrados || "No corresponde"}
+            </p>
+
+            <p>
+              <strong>Descripción:</strong>{" "}
+              {presupuestoSeleccionado.descripcion}
+            </p>
+
+            <p>
+              <strong>Estado:</strong>{" "}
+              {presupuestoSeleccionado.estado}
+            </p>
+
+            <button
+              type="button"
+              onClick={() => setPresupuestoSeleccionado(null)}>
+              Cerrar
+            </button>
+
+          </div>
+        )}
+      </section>
+      <section className="admin-table-section">
+        <h2>Pedidos</h2>
+
+        <div className="tabla-contenedor">
+          <table className="admin-table">
+
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Productos</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {pedidos.map((pedido) => (
+                <tr key={pedido._id}>
+
+                  <td>{pedido.usuario}</td>
+
+                  <td>
+                    {pedido.productos.map((producto, index) => (
+                      <div key={index}>
+                        {producto.nombre} x {producto.cantidad}
+                      </div>
+                    ))}
+                  </td>
+
+                  <td>
+                    $ {pedido.total}
+                  </td>
+
+                  <td>
+                    {pedido.estado}
+                  </td>
+
+                  <td>
+                    <select
+                      value={pedido.estado}
+                      onChange={(evento) =>
+                        cambiarEstadoPedido(
+                          pedido._id,
+                          evento.target.value
+                        )
+                      }
+                    >
+                      <option value="pendiente">Pendiente</option>
+                      <option value="en preparacion">En preparación</option>
+                      <option value="enviado">Enviado</option>
+                      <option value="entregado">Entregado</option>
+                      <option value="cancelado">Cancelado</option>
+                    </select>
+                  </td>
+
+                </tr>
+              ))}
+            </tbody>
+
+          </table>
+        </div>
+      </section>
 
 
     </main>
