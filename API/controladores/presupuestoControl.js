@@ -4,6 +4,7 @@ import obtenerUnPresupuesto from "../servicios/presupuesto/obtenerUnPresupuesto.
 import eliminarPresupuesto from "../servicios/presupuesto/eliminarPresupuesto.js";
 import obtenerMisPresupuestos from "../servicios/presupuesto/obtenerMisPresupuestos.js";
 import cambiarEstadoPresupuesto from "../servicios/presupuesto/cambiarEstadoPresupuesto.js";
+import crearNotificacion from "../servicios/notificacion/crearNotificacion.js";
 
 export const crearPresupuestoControl = async (req, res) => {
 
@@ -153,6 +154,14 @@ export const cambiarEstadoPresupuestoControl = async (req, res) => {
             });
         }
 
+        if (req.usuario.rol === "vendedor") {
+
+            await crearNotificacion({
+                mensaje: `Un vendedor cambió el estado del presupuesto de ${presupuesto.nombre} ${presupuesto.apellido} a ${estado}`,
+                tipo: "presupuesto"
+            });
+
+        }
         res.status(200).json({
             mensaje: "Estado actualizado",
             presupuesto: presupuesto

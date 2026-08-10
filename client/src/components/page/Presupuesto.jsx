@@ -1,6 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../../services/api";
+
 
 export default function Presupuesto() {
+
+  const navigate = useNavigate();
 
   const [presupuesto, setPresupuesto] = useState({
     servicio: "",
@@ -18,17 +23,52 @@ export default function Presupuesto() {
     });
   }
 
-  function enviarPresupuesto(evento) {
-    evento.preventDefault();//evita recargar la pag
+  async function enviarPresupuesto(evento) {
 
-    alert("Solicitud de presupuesto enviada");
+    evento.preventDefault();
 
-    setPresupuesto({
-      servicio: "",
-      direccion: "",
-      metrosCuadrados: "",
-      descripcion: "",
-    });
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Debes iniciar sesión para solicitar un presupuesto");
+      navigate("/login");
+      return;
+    }
+
+    try {
+
+      await api.post(
+        "/presupuestos",
+        {
+          servicio: presupuesto.servicio,
+          direccionObra: presupuesto.direccion,
+          metrosCuadrados: Number(presupuesto.metrosCuadrados) || 0,
+          descripcion: presupuesto.descripcion
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      alert("Solicitud de presupuesto enviada");
+
+      setPresupuesto({
+        servicio: "",
+        direccion: "",
+        metrosCuadrados: "",
+        descripcion: "",
+      });
+
+    } catch (error) {
+
+      alert(
+        error.response?.data?.mensaje ||
+        "Error al enviar el presupuesto"
+      );
+
+    }
   }
 
   return (

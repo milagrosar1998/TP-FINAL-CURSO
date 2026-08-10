@@ -6,6 +6,7 @@ import usuarioRuta from "./usuarioRuta.js";
 import pedidoRuta from "./pedidoRuta.js";
 import presupuestoRuta from "./presupuestoRuta.js";
 import servicioObraRuta from "./servicioObraRuta.js";
+import notificacionRuta from "./notificacionRuta.js";
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.use("/", autRuta);
 router.use("/", usuarioRuta);
 router.use("/", pedidoRuta);
 router.use("/", presupuestoRuta);
+router.use("/", notificacionRuta);
 router.use("/", servicioObraRuta);
 
 export default router;
