@@ -7,6 +7,15 @@ export default function Navbar() {
     (state) => state.carrito.productos.length
   );
 
+function cerrarSesion() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("usuario");
+
+  window.location.href = "/"; 
+  //manda al usuario al inicio cuando cierra sesion
+}
+
+
   return (
     <nav className="navbar">
 
@@ -29,7 +38,12 @@ export default function Navbar() {
           <i className="bi bi-cart3"></i>
           <span>{cantidadCarrito}</span>
         </Link></li>
-
+        <li><button
+            type="button"
+            className="btn-cerrar-sesion"
+            onClick={cerrarSesion}>
+            Cerrar sesión
+          </button></li>
       </ul>
     </nav>
   )
