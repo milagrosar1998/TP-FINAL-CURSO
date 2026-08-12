@@ -3,7 +3,6 @@ import Form from "../organisms/Form";
 import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
-
 export default function LoginForm() {
 
     const navigate = useNavigate();
@@ -18,21 +17,39 @@ export default function LoginForm() {
         const password = formulario.get("password");
 
         try {
+
             const respuesta = await api.post("/login", {
                 email,
                 password
             });
+
             const token = respuesta.data.token;
             const usuario = respuesta.data.usuario;
 
-            localStorage.setItem("token", token);
-            localStorage.setItem("usuario", JSON.stringify(usuario));
+            const usuarioSeguro = {
+                _id: usuario._id,
+                nombre: usuario.nombre,
+                apellido: usuario.apellido,
+                email: usuario.email,
+                telefono: usuario.telefono,
+                direccion: usuario.direccion,
+                ciudad: usuario.ciudad,
+                provincia: usuario.provincia,
+                rol: usuario.rol
+            };
 
-            if (usuario.rol === "admin") {
+            localStorage.setItem("token", token);
+
+            localStorage.setItem(
+                "usuario",
+                JSON.stringify(usuarioSeguro)
+            );
+
+            if (usuarioSeguro.rol === "admin") {
 
                 navigate("/admin");
 
-            } else if (usuario.rol === "vendedor") {
+            } else if (usuarioSeguro.rol === "vendedor") {
 
                 navigate("/vendor");
 
@@ -61,5 +78,4 @@ export default function LoginForm() {
             formSubmit={manejarIngreso}
         />
     );
-
 }

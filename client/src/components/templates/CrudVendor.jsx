@@ -59,6 +59,7 @@ export default function CrudVendor() {
 
     }
   }
+  
   async function cargarPresupuestos() {
 
     const token = localStorage.getItem("token");
@@ -89,6 +90,7 @@ export default function CrudVendor() {
     cargarProductos();
     cargarPedidos();
     cargarPresupuestos();
+    
 
   }, []);
 
@@ -212,6 +214,34 @@ export default function CrudVendor() {
 
   }
 
+  async function cambiarEstadoPresupuesto(id, estado) {
+
+    const token = localStorage.getItem("token");
+
+    try {
+
+      await api.put(
+        `/presupuestos/${id}/estado`,
+        { estado: estado },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      await cargarPresupuestos();
+
+    } catch (error) {
+
+      alert(
+        error.response?.data?.mensaje ||
+        "Error al cambiar el estado del presupuesto"
+      );
+
+    }
+
+  }
 
   async function eliminarProducto(id) {
 
@@ -483,12 +513,73 @@ export default function CrudVendor() {
       </section>
 
 
-      <section>
+      <section className="admin-table-section">
+
         <h2>Presupuestos</h2>
 
-        <p>
-          Acá se mostrarán las solicitudes de presupuesto recibidas.
-        </p>
+        <div className="tabla-contenedor">
+
+          <table className="admin-table">
+
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Servicio</th>
+                <th>Metros²</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {presupuestos.map((presupuesto) => (
+
+                <tr key={presupuesto._id}>
+
+                  <td>
+                    {presupuesto.nombre} {presupuesto.apellido}
+                  </td>
+
+                  <td>{presupuesto.servicio}</td>
+
+                  <td>
+                    {presupuesto.metrosCuadrados > 0
+                      ? presupuesto.metrosCuadrados
+                      : "No corresponde"}
+                  </td>
+
+                  <td>{presupuesto.estado}</td>
+
+                  <td>
+                    <select
+                      value={presupuesto.estado}
+                      onChange={(evento) =>
+                        cambiarEstadoPresupuesto(
+                          presupuesto._id,
+                          evento.target.value
+                        )
+                      }
+                    >
+                      <option value="pendiente">Pendiente</option>
+                      <option value="en revision">En revisión</option>
+                      <option value="enviado">Enviado</option>
+                      <option value="aceptado">Aceptado</option>
+                      <option value="en ejecucion">En ejecución</option>
+                      <option value="finalizado">Finalizado</option>
+                    </select>
+                  </td>
+
+                </tr>
+
+              ))}
+
+            </tbody>
+
+          </table>
+
+        </div>
+
       </section>
 
     </main>

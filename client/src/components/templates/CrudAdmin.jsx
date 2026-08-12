@@ -29,6 +29,8 @@ export default function CrudAdmin() {
 
   const [pedidos, setPedidos] = useState([]);
 
+  const [notificaciones, setNotificaciones] = useState([]);
+
   async function cargarProductos() {
 
     try {
@@ -64,6 +66,30 @@ export default function CrudAdmin() {
     } catch (error) {
 
       console.log("Error al cargar usuarios", error);
+
+    }
+
+  }
+  async function cargarNotificaciones() {
+
+    const token = localStorage.getItem("token");
+
+    try {
+
+      const respuesta = await api.get(
+        "/notificaciones",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      setNotificaciones(respuesta.data);
+
+    } catch (error) {
+
+      console.log("Error al cargar notificaciones", error);
 
     }
 
@@ -200,6 +226,7 @@ export default function CrudAdmin() {
     cargarUsuarios();
     cargarPresupuestos();
     cargarPedidos();
+    cargarNotificaciones();
 
   }, []);
 
@@ -384,7 +411,34 @@ export default function CrudAdmin() {
     }
 
   }
+  async function marcarComoLeida(id) {
 
+    const token = localStorage.getItem("token");
+
+    try {
+
+      await api.put(
+        `/notificaciones/${id}/leida`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      await cargarNotificaciones();
+
+    } catch (error) {
+
+      alert(
+        error.response?.data?.mensaje ||
+        "Error al marcar la notificación como leída"
+      );
+
+    }
+
+  }
   return (
     <main className="admin-page">
       <section className="admin-header">
@@ -396,6 +450,50 @@ export default function CrudAdmin() {
         </p>
       </section>
 
+      <section className="admin-table-section">
+
+        <h2>Notificaciones</h2>
+
+        {notificaciones.length === 0 ? (
+
+          <p>No hay notificaciones.</p>
+
+        ) : (
+
+          <div>
+
+            {notificaciones.slice(0, 5).map((notificacion) => (
+
+              <div
+                key={notificacion._id}
+                className={`notificacion ${notificacion.leida ? "leida" : "no-leida"
+                  }`}
+              >
+                <p>{notificacion.mensaje}</p>
+
+                <span>
+                  {notificacion.leida
+                    ? "Leída"
+                    : "No leída"}
+                </span>
+
+                {!notificacion.leida && (
+                  <button
+                    type="button"
+                    onClick={() => marcarComoLeida(notificacion._id)}
+                  >
+                    Marcar como leída
+                  </button>
+                )}
+              </div>
+
+            ))}
+
+          </div>
+
+        )}
+
+      </section>
 
 
       <section className="admin-form-section">

@@ -1,3 +1,5 @@
+import crearNotificacion from "../servicios/notificacion/crearNotificacion.js";
+import Usuario from "../modelos/usuario.js";
 import crearProducto from "../servicios/producto/crearProducto.js";
 import obtenerTodosLosProductos from "../servicios/producto/obtenerTodosLosProductos.js";
 import obtenerUnProducto from "../servicios/producto/obtenerUnProducto.js";
@@ -17,6 +19,17 @@ export const crearProductoControl = async (req, res) => {
         };
 
         const producto = await crearProducto(datosProducto);
+
+        if (req.usuario.rol === "vendedor") {
+
+            const vendedor = await Usuario.findById(req.usuario.id);
+
+            await crearNotificacion({
+                mensaje: `${vendedor.nombre} ${vendedor.apellido} agregó el producto ${producto.nombre}`,
+                tipo: "producto"
+            });
+
+        }
 
         res.status(201).json(producto);
 
@@ -74,7 +87,7 @@ export const actualizarProductoControl = async (req, res) => {
 
     try {
 
-        const id = req.params.id; // Obtiene el id que viene en la URL.
+        const id = req.params.id;
 
         const datosActualizados = {
             ...req.body
@@ -83,20 +96,31 @@ export const actualizarProductoControl = async (req, res) => {
         if (req.file) {
             datosActualizados.imagen =
                 "/imagenes/productos/" + req.file.filename;
-        } // guarda lo que mande el cliente en el body
+        }
 
         const productoActualizado = await actualizarProducto(
             id,
             datosActualizados
         );
 
-        if (productoActualizado === null) { // "¿MongoDB no encontró ningún producto con ese id?"
+        if (productoActualizado === null) {
 
             return res.status(404).json({
                 mensaje: "No se encontró el producto"
             });
 
         } else {
+
+            if (req.usuario.rol === "vendedor") {
+
+                const vendedor = await Usuario.findById(req.usuario.id);
+
+                await crearNotificacion({
+                    mensaje: `${vendedor.nombre} ${vendedor.apellido} editó el producto ${productoActualizado.nombre}`,
+                    tipo: "producto"
+                });
+
+            }
 
             res.status(200).json(productoActualizado);
 
@@ -124,10 +148,23 @@ export const eliminarProductoControl = async (req, res) => {
                 mensaje: "No se encontró el producto"
             });
         } else {
+
+            if (req.usuario.rol === "vendedor") {
+
+                const vendedor = await Usuario.findById(req.usuario.id);
+
+                await crearNotificacion({
+                    mensaje: `${vendedor.nombre} ${vendedor.apellido} eliminó el producto ${productoEliminado.nombre}`,
+                    tipo: "producto"
+                });
+
+            }
+
             res.status(200).json({
                 mensaje: "Producto eliminado correctamente",
                 producto: productoEliminado
             });
+
         }
 
     } catch (error) {

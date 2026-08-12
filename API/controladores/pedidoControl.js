@@ -1,3 +1,5 @@
+import crearNotificacion from "../servicios/notificacion/crearNotificacion.js";
+import Usuario from "../modelos/usuario.js";
 import crearPedido from "../servicios/pedido/crearPedido.js";
 import obtenerTodosLosPedidos from "../servicios/pedido/obtenerTodosLosPedidos.js";
 import obtenerUnPedido from "../servicios/pedido/obtenerUnPedido.js";
@@ -175,7 +177,8 @@ export const cambiarEstadoPedidoControl = async (req, res) => {
 
         const id = req.params.id;
         const { estado } = req.body;
-         if (
+
+        if (
             estado !== "pendiente" &&
             estado !== "en preparacion" &&
             estado !== "enviado" &&
@@ -187,18 +190,59 @@ export const cambiarEstadoPedidoControl = async (req, res) => {
             });
         }
 
-        const pedido = await cambiarEstadoPedido(id, estado);
 
-        if (pedido === null) {
+        // Buscamos el pedido antes de modificarlo
+        const pedidoAnterior = await obtenerUnPedido(id);
+
+        if (pedidoAnterior === null) {
             return res.status(404).json({
                 mensaje: "Pedido no encontrado"
             });
         }
 
+
+        // Si ya tiene ese estado, no hacemos nada
+        if (pedidoAnterior.estado === estado) {
+            return res.status(200).json({
+                mensaje: "El pedido ya tiene ese estado",
+                pedido: pedidoAnterior
+            });
+        }
+
+
+        const estadoAnterior = pedidoAnterior.estado;
+
+
+        // Ahora sí actualizamos el pedido
+        const pedido = await cambiarEstadoPedido(id, estado);
+
+
+        // Si quien hizo el cambio es vendedor,
+        // generamos una notificación para el admin
+        if (req.usuario.rol === "vendedor") {
+
+            const vendedor = await Usuario.findById(req.usuario.id);
+
+            const cliente = await Usuario.findById(
+                pedidoAnterior.usuarioId
+            );
+
+
+            await crearNotificacion({
+
+                mensaje: `${vendedor.nombre} ${vendedor.apellido} cambió el pedido de ${cliente.nombre} ${cliente.apellido} de ${estadoAnterior} a ${estado}`,
+
+                tipo: "pedido"
+            });
+
+        }
+
+
         res.status(200).json({
             mensaje: "Estado actualizado",
             pedido: pedido
         });
+
 
     } catch (error) {
 

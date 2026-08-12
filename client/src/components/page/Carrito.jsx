@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-
+import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
 import {
   eliminarProducto,
-  vaciarCarrito,
+  vaciarCarrito
 } from "../../redux/carritoSlice";
 
 
@@ -10,7 +11,7 @@ export default function Carrito() {
   const carrito = useSelector(
     (state) => state.carrito.productos
   );
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
 
@@ -21,6 +22,54 @@ export default function Carrito() {
     total = total + producto.precio;
     //recorremos acumulando o sumando precios
   });
+  async function finalizarCompra() {
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Debes iniciar sesión para finalizar la compra");
+      navigate("/login");
+      return;
+    }
+
+    try {
+
+      const productosPedido = carrito.map((producto) => ({
+        productoId: producto._id,
+        nombre: producto.nombre,
+        precio: producto.precio,
+        cantidad: 1
+      }));
+
+      await api.post(
+        "/pedidos",
+        {
+          productos: productosPedido,
+          total: total
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      alert("Compra realizada correctamente");
+
+      dispatch(vaciarCarrito());
+
+      navigate("/usuario");
+
+    } catch (error) {
+
+      alert(
+        error.response?.data?.mensaje ||
+        "Error al realizar la compra"
+      );
+
+    }
+
+  }
 
   return (
     <main className="carrito-page">
@@ -84,7 +133,10 @@ export default function Carrito() {
                 Vaciar carrito
               </button>
 
-              <button className="boton-finalizar">
+              <button
+                className="boton-finalizar"
+                onClick={finalizarCompra}
+              >
                 Finalizar compra
               </button>
             </div>
