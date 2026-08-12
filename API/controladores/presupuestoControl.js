@@ -135,6 +135,7 @@ export const cambiarEstadoPresupuestoControl = async (req, res) => {
         const id = req.params.id;
         const { estado } = req.body;
 
+        // Validamos que el estado recibido sea válido
         if (
             estado !== "pendiente" &&
             estado !== "en revision" &&
@@ -158,7 +159,8 @@ export const cambiarEstadoPresupuestoControl = async (req, res) => {
             });
         }
 
-        // Si el estado ya era ese, no hacemos nada
+
+        // Si ya tiene ese estado, no modificamos ni notificamos
         if (presupuestoAnterior.estado === estado) {
             return res.status(200).json({
                 mensaje: "El presupuesto ya tiene ese estado",
@@ -167,32 +169,43 @@ export const cambiarEstadoPresupuestoControl = async (req, res) => {
         }
 
 
-        // Guardamos cuál era el estado anterior
+        // Guardamos el estado anterior
         const estadoAnterior = presupuestoAnterior.estado;
 
 
-        // Ahora sí actualizamos
-        const presupuesto = await cambiarEstadoPresupuesto(id, estado);
+        // Actualizamos el presupuesto
+        const presupuesto = await cambiarEstadoPresupuesto(
+            id,
+            estado
+        );
 
 
-        // Si quien hizo el cambio es vendedor
+        // Solo generamos notificación si el cambio lo hizo un vendedor
         if (req.usuario.rol === "vendedor") {
 
-            // Buscamos los datos del vendedor
-            const vendedor = await Usuario.findById(req.usuario.id);
+            // Buscamos al vendedor
+            const vendedor = await Usuario.findById(
+                req.usuario.id
+            );
 
-            // Buscamos los datos del cliente que pidió el presupuesto
+            // Buscamos al cliente dueño del presupuesto
             const cliente = await Usuario.findById(
                 presupuestoAnterior.usuario
             );
 
 
-            await crearNotificacion({
+            // Si encontramos a ambos, creamos la notificación
+            if (vendedor && cliente) {
 
-                mensaje: `${vendedor.nombre} ${vendedor.apellido} cambió el presupuesto de ${cliente.nombre} ${cliente.apellido} de ${estadoAnterior} a ${estado}`,
+                await crearNotificacion({
 
-                tipo: "presupuesto"
-            });
+                    mensaje: `${vendedor.nombre} ${vendedor.apellido} cambió el presupuesto de ${cliente.nombre} ${cliente.apellido} de ${estadoAnterior} a ${estado}`,
+
+                    tipo: "presupuesto"
+
+                });
+
+            }
 
         }
 

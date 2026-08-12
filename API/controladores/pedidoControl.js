@@ -178,6 +178,7 @@ export const cambiarEstadoPedidoControl = async (req, res) => {
         const id = req.params.id;
         const { estado } = req.body;
 
+        // Validamos que el estado sea válido
         if (
             estado !== "pendiente" &&
             estado !== "en preparacion" &&
@@ -191,7 +192,7 @@ export const cambiarEstadoPedidoControl = async (req, res) => {
         }
 
 
-        // Buscamos el pedido antes de modificarlo
+        // Buscamos el pedido ANTES de modificarlo
         const pedidoAnterior = await obtenerUnPedido(id);
 
         if (pedidoAnterior === null) {
@@ -201,7 +202,7 @@ export const cambiarEstadoPedidoControl = async (req, res) => {
         }
 
 
-        // Si ya tiene ese estado, no hacemos nada
+        // Si ya tiene ese estado, no modificamos ni notificamos
         if (pedidoAnterior.estado === estado) {
             return res.status(200).json({
                 mensaje: "El pedido ya tiene ese estado",
@@ -210,30 +211,43 @@ export const cambiarEstadoPedidoControl = async (req, res) => {
         }
 
 
+        // Guardamos el estado anterior
         const estadoAnterior = pedidoAnterior.estado;
 
 
-        // Ahora sí actualizamos el pedido
-        const pedido = await cambiarEstadoPedido(id, estado);
+        // Actualizamos el pedido
+        const pedido = await cambiarEstadoPedido(
+            id,
+            estado
+        );
 
 
-        // Si quien hizo el cambio es vendedor,
-        // generamos una notificación para el admin
+        // Solo notificamos si el cambio lo hizo un vendedor
         if (req.usuario.rol === "vendedor") {
 
-            const vendedor = await Usuario.findById(req.usuario.id);
+            // Buscamos al vendedor
+            const vendedor = await Usuario.findById(
+                req.usuario.id
+            );
 
+            // Buscamos al cliente dueño del pedido
             const cliente = await Usuario.findById(
                 pedidoAnterior.usuarioId
             );
 
 
-            await crearNotificacion({
+            // Si existen vendedor y cliente, creamos la notificación
+            if (vendedor && cliente) {
 
-                mensaje: `${vendedor.nombre} ${vendedor.apellido} cambió el pedido de ${cliente.nombre} ${cliente.apellido} de ${estadoAnterior} a ${estado}`,
+                await crearNotificacion({
 
-                tipo: "pedido"
-            });
+                    mensaje: `${vendedor.nombre} ${vendedor.apellido} cambió el pedido de ${cliente.nombre} ${cliente.apellido} de ${estadoAnterior} a ${estado}`,
+
+                    tipo: "pedido"
+
+                });
+
+            }
 
         }
 

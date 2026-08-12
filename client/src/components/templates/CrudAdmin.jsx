@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
+import { Link } from "react-router-dom";
 
 
 export default function CrudAdmin() {
@@ -263,10 +264,10 @@ export default function CrudAdmin() {
     setEditandoId(producto._id);
     //al enviar sabe coon el id que producto modificar
 
-     window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });//hace que la pag suba aut. cuando presiono editar
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });//hace que la pag suba aut. cuando presiono editar
   }
 
 
@@ -454,6 +455,14 @@ export default function CrudAdmin() {
 
         <h2>Notificaciones</h2>
 
+        <button
+          type="button"
+          className="btn-actualizar-notificaciones"
+          onClick={cargarNotificaciones}
+        >
+          Actualizar notificaciones
+        </button>
+
         {notificaciones.length === 0 ? (
 
           <p>No hay notificaciones.</p>
@@ -489,9 +498,17 @@ export default function CrudAdmin() {
 
             ))}
 
+            <Link
+              to="/admin/notificaciones"
+              className="ver-notificaciones"
+            >
+              Ver todas las notificaciones
+            </Link>
+
           </div>
 
         )}
+
 
       </section>
 

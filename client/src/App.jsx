@@ -2,6 +2,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { Navbar, Footer } from "./components/molecules";
 import PrivateRoute from "./components/PrivateRoute";
+import Notificaciones from "./components/page/Notificaciones";
 
 import {
   Home,
@@ -57,6 +58,15 @@ function App() {
         />
 
         <Route
+          path="/admin/notificaciones"
+          element={
+            <PrivateRoute rolesPermitidos={["admin"]}>
+              <Notificaciones />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
           path="/vendor"
           element={
             <PrivateRoute rolesPermitidos={["vendedor"]}>
@@ -73,6 +83,8 @@ function App() {
             </PrivateRoute>
           }
         />
+
+
         <Route path="/presupuesto" element={<Presupuesto />} />
 
       </Routes>

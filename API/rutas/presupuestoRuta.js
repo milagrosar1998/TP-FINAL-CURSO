@@ -19,7 +19,7 @@ router.get("/presupuestos", verificarToken, verificarVendedorOAdmin, obtenerTodo
 router.post("/presupuestos",  verificarToken, crearPresupuestoControl);
 router.get("/mis-presupuestos", verificarToken, obtenerMisPresupuestosControl);
 router.put("/presupuestos/:id/estado", verificarToken, verificarVendedorOAdmin, cambiarEstadoPresupuestoControl);
-router.delete("/presupuestos/:id", eliminarPresupuestoControl);
+router.delete("/presupuestos/:id", verificarToken, verificarVendedorOAdmin, eliminarPresupuestoControl);
 
 
 export default router;

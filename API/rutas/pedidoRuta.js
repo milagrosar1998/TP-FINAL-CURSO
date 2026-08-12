@@ -18,9 +18,9 @@ const router = express.Router();
 router.post("/pedidos", verificarToken, crearPedidoControl);
 router.get("/pedidos", verificarToken, verificarVendedorOAdmin, obtenerTodosLosPedidosControl);
 router.get("/mis-pedidos", verificarToken, obtenerMisPedidosControl);
-router.get("/pedidos/:id", obtenerUnPedidoControl);
-router.put("/pedidos/:id", actualizarPedidoControl);
+router.get("/pedidos/:id", verificarToken, verificarVendedorOAdmin, obtenerUnPedidoControl);
+router.put("/pedidos/:id", verificarToken, verificarVendedorOAdmin, actualizarPedidoControl);
 router.put("/pedidos/:id/estado", verificarToken, verificarVendedorOAdmin, cambiarEstadoPedidoControl);
-router.delete("/pedidos/:id", eliminarPedidoControl);
+router.delete("/pedidos/:id", verificarToken, verificarVendedorOAdmin, eliminarPedidoControl);
 
 export default router;

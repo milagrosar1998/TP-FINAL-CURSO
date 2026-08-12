@@ -35,7 +35,7 @@ export default function Carrito() {
     try {
 
       const productosPedido = carrito.map((producto) => ({
-        productoId: producto._id,
+        productoId: producto.id,
         nombre: producto.nombre,
         precio: producto.precio,
         cantidad: 1
