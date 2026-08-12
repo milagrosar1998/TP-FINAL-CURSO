@@ -14,7 +14,7 @@ export default function CrudAdmin() {
     descripcion: "",
     stock: "",
     categoria: "",
-    imagen: "",
+    imagen: null,
   });
   //guarda lo que el admin escribe en cada campo
 
@@ -71,25 +71,30 @@ export default function CrudAdmin() {
   async function guardarProducto(evento) {
 
     evento.preventDefault();
+    const datosFormulario = new FormData();
 
+    datosFormulario.append("nombre", productoActual.nombre);
+    datosFormulario.append("precio", productoActual.precio);
+    datosFormulario.append("descripcion", productoActual.descripcion);
+    datosFormulario.append("stock", productoActual.stock);
+    datosFormulario.append("categoria", productoActual.categoria);
+
+    if (productoActual.imagen) {
+      datosFormulario.append("imagen", productoActual.imagen);
+    }
     const token = localStorage.getItem("token");
 
-    const productoPreparado = {
-      ...productoActual,
-      precio: Number(productoActual.precio),
-      stock: Number(productoActual.stock)
-    };
 
     try {
 
       if (editandoId !== null) {
 
         await api.put(
-          `/productos/${editandoId}`,
-          productoPreparado,
+          "/productos/" + editandoId,
+          datosFormulario,
           {
             headers: {
-              Authorization: `Bearer ${token}`
+              Authorization: "Bearer " + token
             }
           }
         );
@@ -98,13 +103,14 @@ export default function CrudAdmin() {
 
         await api.post(
           "/productos",
-          productoPreparado,
+          datosFormulario,
           {
             headers: {
-              Authorization: `Bearer ${token}`
+              Authorization: "Bearer " + token
             }
           }
         );
+
 
       }
 
@@ -118,10 +124,16 @@ export default function CrudAdmin() {
         descripcion: "",
         stock: "",
         categoria: "",
-        imagen: ""
+        imagen: null
       });
+      alert(
+        editandoId !== null
+          ? "Producto actualizado correctamente"
+          : "Producto agregado correctamente"
+      );
 
     } catch (error) {
+      console.log(error);
 
       alert(
         error.response?.data?.mensaje ||
@@ -200,11 +212,11 @@ export default function CrudAdmin() {
   ); //usuarios con rol de vendedores
 
   function manejarCambio(evento) {
-    const { name, value } = evento.target;
+    const { name, value, files } = evento.target;
 
     setProductoActual({
       ...productoActual,
-      [name]: value,
+      [name]: name === "imagen" ? files[0] : value,
     });
   } //actualiza los productos con la nueva informacion 
   //ademas conservando la informacion que tenia
@@ -218,11 +230,16 @@ export default function CrudAdmin() {
       descripcion: producto.descripcion,
       stock: producto.stock || "",
       categoria: producto.categoria || "",
-      imagen: producto.imagen,
+      imagen: null,
     });//carga los datos que tiene dentro del formulario
 
     setEditandoId(producto._id);
     //al enviar sabe coon el id que producto modificar
+
+     window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });//hace que la pag suba aut. cuando presiono editar
   }
 
 
@@ -458,15 +475,15 @@ export default function CrudAdmin() {
           </div>
 
           <div>
-            <label htmlFor="imagen">Dirección de la imagen</label>
+            <label htmlFor="imagen">Imagen del producto</label>
 
             <input
               id="imagen"
               name="imagen"
-              type="text"
-              value={productoActual.imagen}
+              type="file"
+              accept="image/*"
               onChange={manejarCambio}
-              required
+              required={editandoId === null}
             />
           </div>
           {/*si hay un producto en edicion muestra editar si no agregar*/}

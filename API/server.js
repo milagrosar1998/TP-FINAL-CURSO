@@ -13,6 +13,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use(
+    "/imagenes",
+    express.static("imagenes")
+);
+
 app.use("/", routes);
 
 app.get("/", (req, res) => {

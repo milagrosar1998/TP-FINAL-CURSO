@@ -1,8 +1,10 @@
 
-import { products } from "../../data/products";
+//import { products } from "../../data/products";
 import { ProductCard } from "../molecules";
 
-import { useState } from "react";
+//bk
+import { useEffect, useState } from "react";
+import api from "../../services/api";
 
 
 export default function Productos() {
@@ -11,8 +13,25 @@ export default function Productos() {
 
   const [busqueda, setBusqueda] = useState("");
   //guarda lo que escribe el usuario
+  const [productos, setProductos] = useState([]);
 
-  const productosFiltrados = products.filter((producto) =>
+  async function cargarProductos() {
+    try {
+      const respuesta = await api.get("/productos");
+      //pide los productos
+      setProductos(respuesta.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }//trae los productos de api
+
+
+
+  useEffect(() => {
+    cargarProductos();
+  }, []);
+
+  const productosFiltrados = productos.filter((producto) =>
     producto.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
     producto.descripcion.toLowerCase().includes(busqueda.toLowerCase())
   );
@@ -47,8 +66,8 @@ export default function Productos() {
       <section className="productos-grid">
         {productosFiltrados.map((producto) => (
           <ProductCard
-            key={producto.id}
-            id={producto.id}
+            key={producto._id}
+            id={producto._id}
             nombre={producto.nombre}
             descripcion={producto.descripcion}
             precio={producto.precio}
@@ -59,10 +78,7 @@ export default function Productos() {
         ))
         }
 
-
-
       </section>
     </main>
   );
-
 }

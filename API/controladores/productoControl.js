@@ -9,6 +9,10 @@ export const crearProductoControl = async (req, res) => {
     try {
         const datosProducto = {
             ...req.body,
+            imagen: req.file //info de imagen subida
+                ? "/imagenes/productos/" + req.file.filename
+                : "",
+
             vendedorId: req.usuario.id
         };
 
@@ -72,7 +76,14 @@ export const actualizarProductoControl = async (req, res) => {
 
         const id = req.params.id; // Obtiene el id que viene en la URL.
 
-        const datosActualizados = req.body; // guarda lo que mande el cliente en el body
+        const datosActualizados = {
+            ...req.body
+        };
+
+        if (req.file) {
+            datosActualizados.imagen =
+                "/imagenes/productos/" + req.file.filename;
+        } // guarda lo que mande el cliente en el body
 
         const productoActualizado = await actualizarProducto(
             id,

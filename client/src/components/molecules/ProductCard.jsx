@@ -27,7 +27,10 @@ const dispatch = useDispatch();
   return (
 
     <article className="producto-card">
-      <img src={imagen} alt={nombre} />
+      <img
+    src={"http://localhost:3000" + imagen}
+    alt={nombre}
+  />
 
       <Heading
         size="h3"
