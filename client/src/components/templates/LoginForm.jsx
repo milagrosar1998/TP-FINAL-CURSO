@@ -45,18 +45,12 @@ export default function LoginForm() {
                 JSON.stringify(usuarioSeguro)
             );
 
-            if (usuarioSeguro.rol === "admin") {
-
-                navigate("/admin");
-
-            } else if (usuarioSeguro.rol === "vendedor") {
-
-                navigate("/vendor");
-
+            if (usuario.rol === "admin") {
+                window.location.href = "/admin";
+            } else if (usuario.rol === "vendedor") {
+                window.location.href = "/vendor";
             } else {
-
-                navigate("/usuario");
-
+                window.location.href = "/usuario";
             }
 
         } catch (error) {
