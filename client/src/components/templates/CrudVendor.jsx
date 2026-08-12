@@ -11,7 +11,7 @@ export default function CrudVendor() {
     descripcion: "",
     stock: "",
     categoria: "",
-    imagen: ""
+    imagen: null
   });
 
   const [pedidos, setPedidos] = useState([]);
@@ -27,15 +27,22 @@ export default function CrudVendor() {
 
       const respuesta = await api.get("/productos");
 
-      setProductos(respuesta.data);
+      const usuarioGuardado = localStorage.getItem("usuario");
+      const usuario = JSON.parse(usuarioGuardado);
+
+      const productosDelVendedor = respuesta.data.filter(
+        (producto) =>
+          producto.vendedorId === usuario._id
+      );
+
+      setProductos(productosDelVendedor);
 
     } catch (error) {
 
       console.log("Error al cargar productos", error);
-
     }
-
   }
+
   async function cargarPedidos() {
 
     const token = localStorage.getItem("token");
@@ -59,7 +66,7 @@ export default function CrudVendor() {
 
     }
   }
-  
+
   async function cargarPresupuestos() {
 
     const token = localStorage.getItem("token");
@@ -90,18 +97,21 @@ export default function CrudVendor() {
     cargarProductos();
     cargarPedidos();
     cargarPresupuestos();
-    
+
 
   }, []);
 
 
   function manejarCambio(evento) {
 
-    const { name, value } = evento.target;
+    const { name, value, files } = evento.target;
 
     setProductoActual({
       ...productoActual,
-      [name]: value
+      [name]: name === "imagen"
+        ? files[0]
+        : value
+
     });
 
   }
@@ -111,24 +121,31 @@ export default function CrudVendor() {
 
     evento.preventDefault();
 
+    const datosFormulario = new FormData();
+
+    datosFormulario.append("nombre", productoActual.nombre);
+    datosFormulario.append("precio", productoActual.precio);
+    datosFormulario.append("descripcion", productoActual.descripcion);
+    datosFormulario.append("stock", productoActual.stock);
+    datosFormulario.append("categoria", productoActual.categoria);
+
+    if (productoActual.imagen) {
+      datosFormulario.append("imagen", productoActual.imagen);
+    }
+
     const token = localStorage.getItem("token");
 
-    const productoPreparado = {
-      ...productoActual,
-      precio: Number(productoActual.precio),
-      stock: Number(productoActual.stock)
-    };
 
     try {
 
       if (editandoId !== null) {
 
         await api.put(
-          `/productos/${editandoId}`,
+          "/productos/" + { editandoId },
           productoPreparado,
           {
             headers: {
-              Authorization: `Bearer ${token}`
+              Authorization: "Bearer" + token
             }
           }
         );
@@ -137,10 +154,10 @@ export default function CrudVendor() {
 
         await api.post(
           "/productos",
-          productoPreparado,
+          datosFormulario,
           {
             headers: {
-              Authorization: `Bearer ${token}`
+              Authorization: "Bearer " + token
             }
           }
         );
@@ -157,16 +174,21 @@ export default function CrudVendor() {
         descripcion: "",
         stock: "",
         categoria: "",
-        imagen: ""
+        imagen: null
       });
-
+      alert(
+        editandoId !== null
+          ? "Producto actualizado correctamente"
+          : "Producto agregado correctamente"
+      );
     } catch (error) {
+
+      console.log(error);
 
       alert(
         error.response?.data?.mensaje ||
         "Error al guardar el producto"
       );
-
     }
 
   }
@@ -179,11 +201,15 @@ export default function CrudVendor() {
       descripcion: producto.descripcion,
       stock: producto.stock || "",
       categoria: producto.categoria || "",
-      imagen: producto.imagen
+      imagen: null
     });
 
     setEditandoId(producto._id);
 
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
   }
   async function cambiarEstadoPedido(id, estado) {
 
@@ -360,14 +386,15 @@ export default function CrudVendor() {
           </div>
 
           <div>
-            <label htmlFor="imagen">Dirección de la imagen</label>
+            <label htmlFor="imagen">Imagen del producto</label>
             <input
               id="imagen"
               name="imagen"
-              type="text"
-              value={productoActual.imagen}
+              type="file"
+              accept="image/*"
+
               onChange={manejarCambio}
-              required
+              required={editandoId === null}
             />
           </div>
 
