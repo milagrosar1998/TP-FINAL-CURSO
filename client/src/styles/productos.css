@@ -5,15 +5,18 @@
   padding: 60px 5%;
 }
 
+
 .productos-header {
   text-align: center;
   margin-bottom: 40px;
 }
 
+
 .productos-header h1 {
   font-size: 40px;
   margin-bottom: 12px;
 }
+
 
 .productos-header p {
   color: #555;
@@ -21,7 +24,10 @@
   margin-bottom: 25px;
 }
 
-/* buscador */
+
+/* =========================
+   BUSCADOR
+========================= */
 
 .productos-buscador {
   width: 90%;
@@ -35,12 +41,16 @@
   font-size: 16px;
 }
 
+
 .productos-buscador:focus {
   outline: none;
   border-color: #f2c200;
 }
 
-/* productos*/
+
+/* =========================
+   PRODUCTOS
+========================= */
 
 .productos-grid {
   max-width: 1200px;
@@ -52,7 +62,6 @@
 
   gap: 25px;
 }
-
 
 
 .producto-card {
@@ -70,6 +79,7 @@
   flex-direction: column;
 }
 
+
 .producto-card img {
   width: 100%;
   height: 220px;
@@ -77,11 +87,13 @@
   object-fit: cover;
 }
 
+
 .producto-card h3 {
   font-size: 22px;
 
   margin: 20px 20px 10px;
 }
+
 
 .producto-card p {
   color: #555;
@@ -93,6 +105,7 @@
   flex: 1;
 }
 
+
 .producto-card h5 {
   font-size: 22px;
 
@@ -101,9 +114,12 @@
   color: #111;
 }
 
-/* Agregarr*/
 
-.producto-card button {
+/* =========================
+   AGREGAR AL CARRITO
+========================= */
+
+.producto-card > button {
   margin: 0 20px 10px;
 
   padding: 11px;
@@ -117,13 +133,20 @@
   font-weight: bold;
 
   cursor: pointer;
+
+  transition: 0.2s ease;
 }
 
-.producto-card button:hover {
-  background-color: #d8ad00;
+
+.producto-card > button:hover {
+  background-color: #111;
+  color: white;
 }
 
-/* DETALLE */
+
+/* =========================
+   VER DETALLE
+========================= */
 
 .producto-card > a {
   margin: 0 20px;
@@ -134,51 +157,92 @@
 
   border: 2px solid #111;
   border-radius: 5px;
+
   color: #111;
+
   font-weight: bold;
+
+  transition: 0.2s ease;
 }
+
 
 .producto-card > a:hover {
   background-color: #111;
   color: white;
 }
 
-/* Tablet */
 
-@media (max-width: 900px) {
+/* =========================
+   CONTADOR EN PRODUCTOS
+========================= */
 
-  .productos-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.contador-producto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-}
+  gap: 12px;
 
-/* Celu*/
-
-@media (max-width: 600px) {
-
-  .productos-page {
-    padding: 40px 20px;
-  }
-
-  .productos-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .productos-header h1 {
-    font-size: 32px;
-  }
-
+  margin: 15px 20px;
 }
 
 
-/* DETALLE DEL PRODUCTO */
+.contador-producto button {
+  width: 36px;
+  height: 36px;
+
+  margin: 0;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 6px;
+
+  background-color: #111;
+  color: white;
+
+  font-size: 20px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+
+.contador-producto button:hover {
+  background-color: #f2c200;
+  color: #111;
+}
+
+
+.contador-producto span {
+  min-width: 40px;
+
+  text-align: center;
+
+  font-size: 18px;
+  font-weight: bold;
+
+  background-color: #f5f5f5;
+
+  border: 1px solid #ddd;
+  border-radius: 6px;
+
+  padding: 7px 10px;
+}
+
+
+/* =========================
+   DETALLE DEL PRODUCTO
+========================= */
 
 .producto-detalle-page {
   width: 100%;
   min-height: 80vh;
 
   background-color: #f5f5f5;
+
   padding: 60px 20px;
 }
 
@@ -186,23 +250,29 @@
 .producto-detalle {
   width: 90%;
   max-width: 1100px;
+
   margin: 0 auto;
 
   background-color: white;
+
   display: grid;
+
   grid-template-columns: 1fr 1fr;
+
   gap: 45px;
 
   padding: 35px;
+
   border-radius: 10px;
-  box-shadow: 0 3px 12px
-    rgba(0, 0, 0, 0.1);
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
 }
 
 
 .producto-detalle-imagen img {
   width: 100%;
   height: 450px;
+
   object-fit: contain;
 
   border-radius: 8px;
@@ -211,28 +281,36 @@
 
 .producto-detalle-info {
   display: flex;
+
   flex-direction: column;
+
   justify-content: center;
 }
 
 
 .producto-detalle-info h1 {
   font-size: 36px;
+
   margin-bottom: 20px;
 }
 
 
 .producto-detalle-descripcion {
   color: #555;
+
   font-size: 18px;
+
   line-height: 1.6;
+
   margin-bottom: 20px;
 }
 
 
 .producto-detalle-info h2 {
   font-size: 30px;
+
   margin-bottom: 20px;
+
   color: #111;
 }
 
@@ -244,11 +322,15 @@
 
 .producto-detalle-info button {
   margin-top: 20px;
+
   padding: 13px 20px;
+
   background-color: #f2c200;
   color: #111;
+
   border: none;
   border-radius: 5px;
+
   font-weight: bold;
 
   cursor: pointer;
@@ -260,18 +342,65 @@
 }
 
 
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+  .productos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+/* =========================
+   DETALLE RESPONSIVE
+========================= */
+
 @media (max-width: 750px) {
 
   .producto-detalle {
     grid-template-columns: 1fr;
   }
 
+
   .producto-detalle-imagen img {
     height: 300px;
   }
 
+
   .producto-detalle-info h1 {
     font-size: 30px;
+  }
+
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 600px) {
+
+  .productos-page {
+    padding: 40px 20px;
+  }
+
+
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .productos-header h1 {
+    font-size: 32px;
+  }
+
+
+  .contador-producto {
+    gap: 10px;
   }
 
 }

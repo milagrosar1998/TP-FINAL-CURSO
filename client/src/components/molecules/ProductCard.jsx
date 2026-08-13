@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Heading, Paragraph } from "../atoms";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -10,10 +11,12 @@ export default function ProductCard({
   descripcion,
   imagen,
   precio,
-
 }) {
 
-const dispatch = useDispatch();
+  const [cantidad, setCantidad] = useState(1);
+
+  const dispatch = useDispatch();
+
 
   const producto = {
     id,
@@ -21,22 +24,25 @@ const dispatch = useDispatch();
     descripcion,
     imagen,
     precio,
-  };//producto
+    cantidad,
+  };
 
 
   return (
 
     <article className="producto-card">
+
       <img
-    src={"http://localhost:3000" + imagen}
-    alt={nombre}
-  />
+        src={"http://localhost:3000" + imagen}
+        alt={nombre}
+      />
+
 
       <Heading
         size="h3"
         text={nombre}
-
       />
+
 
       <Paragraph
         text={descripcion}
@@ -46,18 +52,52 @@ const dispatch = useDispatch();
       <Heading
         size="h5"
         text={"$ " + precio}
-
       />
 
 
+      <div className="contador-producto">
+
+        <button
+          type="button"
+          onClick={() => {
+
+            if (cantidad > 1) {
+              setCantidad(cantidad - 1);
+            }
+
+          }}
+        >
+          -
+        </button>
+
+
+        <span>{cantidad}</span>
+
+
+        <button
+          type="button"
+          onClick={() => setCantidad(cantidad + 1)}
+        >
+          +
+        </button>
+
+      </div>
+
 
       <button
+        type="button"
         onClick={() => {
-          dispatch(agregarProducto(producto));
-          alert("Producto agregado al carrito");
-        }}
-      >{/*dispatch manda la informacion a redux */}
 
+          dispatch(agregarProducto(producto));
+
+          alert(
+            `${cantidad} producto${cantidad > 1 ? "s" : ""} agregado${cantidad > 1 ? "s" : ""} al carrito`
+          );
+
+          setCantidad(1);
+
+        }}
+      >
         Agregar al carrito
       </button>
 
@@ -66,7 +106,7 @@ const dispatch = useDispatch();
         Ver detalle
       </Link>
 
+    </article>
 
-    </article >
   );
 }
