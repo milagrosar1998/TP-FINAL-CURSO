@@ -145,7 +145,7 @@ export default function CrudVendor() {
           datosFormulario,
           {
             headers: {
-              Authorization: "Bearer" + token
+              Authorization: "Bearer " + token
             }
           }
         );
