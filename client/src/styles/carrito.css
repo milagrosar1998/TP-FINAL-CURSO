@@ -215,3 +215,41 @@
   }
 
 }
+/* CONTADOR EN CARRITO */
+
+.contador-carrito {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.contador-carrito button {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 6px;
+  background-color: #111;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.contador-carrito button:hover {
+  background-color: #f2c200;
+  color: #111;
+}
+
+.contador-carrito span {
+  min-width: 35px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: bold;
+  background-color: #f2c200;
+  color: #111;
+  padding: 7px 10px;
+  border-radius: 6px;
+}
