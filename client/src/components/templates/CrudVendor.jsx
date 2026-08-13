@@ -141,7 +141,7 @@ export default function CrudVendor() {
       if (editandoId !== null) {
 
         await api.put(
-          "/productos/" + { editandoId },
+          "/productos/" +  editandoId ,
           datosFormulario,
           {
             headers: {
