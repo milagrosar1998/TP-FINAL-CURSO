@@ -142,7 +142,7 @@ export default function CrudVendor() {
 
         await api.put(
           "/productos/" + { editandoId },
-          productoPreparado,
+          datosFormulario,
           {
             headers: {
               Authorization: "Bearer" + token
