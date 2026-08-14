@@ -764,7 +764,9 @@ export default function CrudAdmin() {
             <tbody>
               {presupuestos.map((presupuesto) => (
                 <tr key={presupuesto._id}>
-                  <td>{presupuesto.nombre} {presupuesto.apellido}</td>
+                  <td>
+                    {presupuesto.usuario?.nombre} {presupuesto.usuario?.apellido}
+                  </td>
                   <td>{presupuesto.servicio}</td>
 
                   <td>
@@ -806,18 +808,18 @@ export default function CrudAdmin() {
 
             <p>
               <strong>Cliente:</strong>{" "}
-              {presupuestoSeleccionado.nombre}{" "}
-              {presupuestoSeleccionado.apellido}
+              {presupuestoSeleccionado.usuario?.nombre}{" "}
+              {presupuestoSeleccionado.usuario?.apellido}
             </p>
 
             <p>
               <strong>Email:</strong>{" "}
-              {presupuestoSeleccionado.email}
+              {presupuestoSeleccionado.usuario?.email}
             </p>
 
             <p>
               <strong>Teléfono:</strong>{" "}
-              {presupuestoSeleccionado.telefono}
+              {presupuestoSeleccionado.usuario?.telefono || "No registrado"}
             </p>
 
             <p>
@@ -874,7 +876,9 @@ export default function CrudAdmin() {
               {pedidos.map((pedido) => (
                 <tr key={pedido._id}>
 
-                  <td>{pedido.usuario}</td>
+                  <td>
+                    {pedido.usuarioId?.nombre} {pedido.usuarioId?.apellido}
+                  </td>
 
                   <td>
                     {pedido.productos.map((producto, index) => (

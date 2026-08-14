@@ -12,6 +12,7 @@ import cambiarEstadoPedido from "../servicios/pedido/cambiarEstadoPedido.js";
 export const crearPedidoControl = async (req, res) => {
 
     try {
+
         const datosPedido = {
             ...req.body,
             usuarioId: req.usuario.id
@@ -23,9 +24,8 @@ export const crearPedidoControl = async (req, res) => {
 
     } catch (error) {
 
-        res.status(500).json({
-            mensaje: "Error al crear el pedido",
-            error: error.message
+        res.status(400).json({
+            mensaje: error.message
         });
 
     }

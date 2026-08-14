@@ -4,7 +4,11 @@ import logo from "../../assets/logo.png";
 
 export default function Navbar() {
   const cantidadCarrito = useSelector(
-    (state) => state.carrito.productos.length
+    (state) =>
+      state.carrito.productos.reduce(
+        (total, producto) => total + producto.cantidad,
+        0
+      )
   );
 
   const usuarioGuardado = localStorage.getItem("usuario");

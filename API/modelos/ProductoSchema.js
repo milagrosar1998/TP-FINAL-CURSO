@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const productoSchema = new mongoose.Schema({ // lo que haria es definir PRODUCTO
+const productoSchema = new mongoose.Schema({
 
     nombre: String,
     precio: Number,
@@ -13,9 +13,11 @@ const productoSchema = new mongoose.Schema({ // lo que haria es definir PRODUCTO
         type: mongoose.Schema.Types.ObjectId,
         ref: "usuarios"
     },
+
 });
 
-export default mongoose.model(
-    "productos",
-    productoSchema
-);
+const Producto =
+    mongoose.models.productos ||
+    mongoose.model("productos", productoSchema);
+
+export default Producto;

@@ -357,7 +357,7 @@ export default function CrudUser() {
 
                 <p>
                   <strong>Dirección:</strong>{" "}
-                  {presupuesto.direccion}
+                  {presupuesto.direccionObra}
                 </p>
 
                 {presupuesto.metrosCuadrados && (

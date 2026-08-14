@@ -141,7 +141,7 @@ export default function CrudVendor() {
       if (editandoId !== null) {
 
         await api.put(
-          "/productos/" +  editandoId ,
+          "/productos/" + editandoId,
           datosFormulario,
           {
             headers: {
@@ -493,7 +493,9 @@ export default function CrudVendor() {
 
                 <tr key={pedido._id}>
 
-                  <td>{pedido.usuario}</td>
+                  <td>
+                    {pedido.usuarioId?.nombre} {pedido.usuarioId?.apellido}
+                  </td>
 
                   <td>
                     {pedido.productos.map((producto, index) => (
@@ -565,7 +567,7 @@ export default function CrudVendor() {
                 <tr key={presupuesto._id}>
 
                   <td>
-                    {presupuesto.nombre} {presupuesto.apellido}
+                    {presupuesto.usuario?.nombre} {presupuesto.usuario?.apellido}
                   </td>
 
                   <td>{presupuesto.servicio}</td>
